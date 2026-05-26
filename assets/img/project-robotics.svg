@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title">
+  <title id="title">Robotics project image</title>
+  <rect width="960" height="600" fill="#eef3f1"/>
+  <rect x="102" y="424" width="756" height="26" rx="13" fill="#202124"/>
+  <circle cx="272" cy="424" r="52" fill="#b45f3c"/>
+  <circle cx="686" cy="424" r="52" fill="#0d6f62"/>
+  <path d="M274 374l110-154 154 88 148-170" fill="none" stroke="#202124" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="384" cy="220" r="34" fill="#345995"/>
+  <circle cx="538" cy="308" r="34" fill="#345995"/>
+  <circle cx="686" cy="138" r="34" fill="#345995"/>
+</svg>

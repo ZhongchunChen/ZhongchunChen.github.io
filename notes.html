@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zhongchun Chen personal academic homepage">
+  <title>Note | Zhongchun Chen</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Zhongchun Chen</a>
+    <nav><a class="" href="index.html">Home</a><a class="active" href="notes.html">Note</a><a class="" href="life.html">Life</a></nav>
+  </header>
+  <main>
+    
+<section class="page-hero">
+  <p class="eyebrow">Notes</p>
+  <h1>Note</h1>
+  <p>Technical notes, reading summaries, course records, and implementation references.</p>
+</section>
+
+<section class="filters" aria-label="Tag filters">
+  <div class="filter-summary">
+    <button class="filter-toggle" type="button" aria-expanded="false" aria-controls="tag-filter-panel">
+      Filter Tags
+    </button>
+    <span>Current: <strong class="current-filter">All</strong></span>
+    <button class="filter-button reset-filter active" data-filter="all" type="button">All</button>
+  </div>
+  <div class="filter-panel" id="tag-filter-panel" hidden>
+    
+<div class="filter-group">
+  <div class="filter-letter">F</div>
+  <div class="filter-options"><button class="filter-button" data-filter="flow matching">flow matching</button></div>
+</div>
+
+<div class="filter-group">
+  <div class="filter-letter">L</div>
+  <div class="filter-options"><button class="filter-button" data-filter="learning-note">learning-note</button></div>
+</div>
+
+<div class="filter-group">
+  <div class="filter-letter">M</div>
+  <div class="filter-options"><button class="filter-button" data-filter="ml">ml</button></div>
+</div>
+
+<div class="filter-group">
+  <div class="filter-letter">S</div>
+  <div class="filter-options"><button class="filter-button" data-filter="sjtu-course">sjtu-course</button></div>
+</div>
+
+  </div>
+</section>
+
+<section class="section collection-list"><div class="stack">
+<article class="media-item note-item" data-tags="flow matching|learning-note">
+  <img src="assets/img/project-rl.svg" alt="">
+  <div>
+    <div class="item-meta">2026-05-19</div>
+    <h3><a href="notes/flow_matching_note.pdf">Flow-Matching Note</a></h3>
+    <p>flow matching and diffusion generative model&#x27;s mathematical principles.</p>
+    <div class="item-row"><span class="tag">flow matching</span><span class="tag">learning-note</span></div>
+  </div>
+</article>
+
+<article class="media-item note-item" data-tags="sjtu-course|ml">
+  <img src="assets/img/project-notes.svg" alt="">
+  <div>
+    <div class="item-meta">NULL · SJTU 2025 Fall</div>
+    <h3><a href="#">NULL</a></h3>
+    <p>Assignments, reading notes, and selected implementation references.</p>
+    <div class="item-row"><span class="tag">sjtu-course</span><span class="tag">ml</span></div>
+  </div>
+</article>
+</div></section>
+
+<script>
+  const filterToggle = document.querySelector('.filter-toggle');
+  const filterPanel = document.querySelector('.filter-panel');
+  const currentFilter = document.querySelector('.current-filter');
+  const buttons = document.querySelectorAll('.filter-button');
+  const cards = document.querySelectorAll('[data-tags]');
+  if (filterToggle && filterPanel) {
+    filterToggle.addEventListener('click', () => {
+      const isOpen = !filterPanel.hidden;
+      filterPanel.hidden = isOpen;
+      filterToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+  }
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      buttons.forEach((item) => item.classList.remove('active'));
+      button.classList.add('active');
+      const filter = button.dataset.filter;
+      if (currentFilter) {
+        currentFilter.textContent = filter === 'all' ? 'All' : button.textContent;
+      }
+      cards.forEach((card) => {
+        const cardTags = card.dataset.tags ? card.dataset.tags.split('|') : [];
+        const visible = filter === 'all' || cardTags.includes(filter);
+        card.hidden = !visible;
+      });
+      if (filterPanel && filter !== 'all') {
+        filterPanel.hidden = true;
+        filterToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  document.addEventListener('click', (event) => {
+    if (!filterPanel || !filterToggle || filterPanel.hidden) return;
+    if (!filterPanel.contains(event.target) && !filterToggle.contains(event.target)) {
+      filterPanel.hidden = true;
+      filterToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+
+
+  </main>
+  <footer>
+    <span>Built with Python for GitHub Pages.</span>
+    <span>Last updated: 2026</span>
+  </footer>
+</body>
+</html>

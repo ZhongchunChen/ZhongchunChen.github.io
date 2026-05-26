@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title">
+  <title id="title">Learning notes project image</title>
+  <rect width="960" height="600" fill="#f4f0ea"/>
+  <rect x="158" y="92" width="644" height="416" rx="18" fill="#ffffff" stroke="#dedbd2" stroke-width="8"/>
+  <path d="M252 190h456M252 270h326M252 350h404" stroke="#202124" stroke-width="18" stroke-linecap="round"/>
+  <rect x="252" y="418" width="126" height="34" rx="17" fill="#0d6f62"/>
+  <rect x="402" y="418" width="164" height="34" rx="17" fill="#b45f3c"/>
+</svg>

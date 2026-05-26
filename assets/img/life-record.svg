@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title">
+  <title id="title">Life record image</title>
+  <rect width="960" height="600" fill="#ffffff"/>
+  <rect x="130" y="96" width="700" height="408" rx="18" fill="#f7f7f7" stroke="#dedede" stroke-width="8"/>
+  <circle cx="318" cy="250" r="76" fill="#0d6f62"/>
+  <path d="M210 430c86-100 142-148 196-120 40 20 66 76 116 74 54-2 86-70 144-150 30 56 56 122 86 196z" fill="#b45f3c"/>
+  <path d="M208 168h544M208 462h544" stroke="#202124" stroke-width="12" stroke-linecap="round"/>
+</svg>

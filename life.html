@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zhongchun Chen personal academic homepage">
+  <title>Life | Zhongchun Chen</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">Zhongchun Chen</a>
+    <nav><a class="" href="index.html">Home</a><a class="" href="notes.html">Note</a><a class="active" href="life.html">Life</a></nav>
+  </header>
+  <main>
+    
+<section class="page-hero">
+  <p class="eyebrow">Life</p>
+  <h1>Life</h1>
+  <p>Personal records and non-academic updates organized with lightweight tags.</p>
+</section>
+
+<section class="filters" aria-label="Tag filters">
+  <div class="filter-summary">
+    <button class="filter-toggle" type="button" aria-expanded="false" aria-controls="tag-filter-panel">
+      Filter Tags
+    </button>
+    <span>Current: <strong class="current-filter">All</strong></span>
+    <button class="filter-button reset-filter active" data-filter="all" type="button">All</button>
+  </div>
+  <div class="filter-panel" id="tag-filter-panel" hidden>
+    
+<div class="filter-group">
+  <div class="filter-letter">C</div>
+  <div class="filter-options"><button class="filter-button" data-filter="campus">campus</button></div>
+</div>
+
+<div class="filter-group">
+  <div class="filter-letter">L</div>
+  <div class="filter-options"><button class="filter-button" data-filter="life">life</button></div>
+</div>
+
+  </div>
+</section>
+
+<section class="section collection-list"><div class="stack">
+<article class="media-item note-item" data-tags="campus|life">
+  <img src="assets/img/life-record.svg" alt="">
+  <div>
+    <div class="item-meta">2025-10-08</div>
+    <h3><a href="#">NULL</a></h3>
+    <p>A lightweight entry for campus life, photos, and non-academic notes.</p>
+    <div class="item-row"><span class="tag">campus</span><span class="tag">life</span></div>
+  </div>
+</article>
+</div></section>
+
+<script>
+  const filterToggle = document.querySelector('.filter-toggle');
+  const filterPanel = document.querySelector('.filter-panel');
+  const currentFilter = document.querySelector('.current-filter');
+  const buttons = document.querySelectorAll('.filter-button');
+  const cards = document.querySelectorAll('[data-tags]');
+  if (filterToggle && filterPanel) {
+    filterToggle.addEventListener('click', () => {
+      const isOpen = !filterPanel.hidden;
+      filterPanel.hidden = isOpen;
+      filterToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+  }
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      buttons.forEach((item) => item.classList.remove('active'));
+      button.classList.add('active');
+      const filter = button.dataset.filter;
+      if (currentFilter) {
+        currentFilter.textContent = filter === 'all' ? 'All' : button.textContent;
+      }
+      cards.forEach((card) => {
+        const cardTags = card.dataset.tags ? card.dataset.tags.split('|') : [];
+        const visible = filter === 'all' || cardTags.includes(filter);
+        card.hidden = !visible;
+      });
+      if (filterPanel && filter !== 'all') {
+        filterPanel.hidden = true;
+        filterToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  document.addEventListener('click', (event) => {
+    if (!filterPanel || !filterToggle || filterPanel.hidden) return;
+    if (!filterPanel.contains(event.target) && !filterToggle.contains(event.target)) {
+      filterPanel.hidden = true;
+      filterToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+
+
+  </main>
+  <footer>
+    <span>Built with Python for GitHub Pages.</span>
+    <span>Last updated: 2026</span>
+  </footer>
+</body>
+</html>

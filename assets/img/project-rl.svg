@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title">
+  <title id="title">Reinforcement learning project image</title>
+  <rect width="960" height="600" fill="#f1efe8"/>
+  <path d="M90 452h780" stroke="#202124" stroke-width="8"/>
+  <circle cx="198" cy="282" r="58" fill="#0d6f62"/>
+  <circle cx="480" cy="182" r="58" fill="#b45f3c"/>
+  <circle cx="762" cy="318" r="58" fill="#345995"/>
+  <path d="M248 260c74-58 132-76 180-70M534 202c74 18 128 48 174 88" fill="none" stroke="#202124" stroke-width="10" stroke-linecap="round"/>
+  <path d="M172 452c42-58 84-98 126-120m364 120c-36-44-70-80-104-108" fill="none" stroke="#0d6f62" stroke-width="10" stroke-linecap="round"/>
+</svg>
