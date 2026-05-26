@@ -24,6 +24,19 @@ def e(value: object) -> str:
     return escape(str(value), quote=True)
 
 
+def href(value: object) -> str:
+    url = str(value).strip()
+    if (
+        not url
+        or url == "#"
+        or url.startswith(("#", "/", "mailto:", "http://", "https://"))
+        or url.endswith((".html", ".pdf"))
+        or "/" in url
+    ):
+        return url or "#"
+    return f"https://{url}"
+
+
 def tag_list(tags: Iterable[str]) -> str:
     return "".join(f'<span class="tag">{e(tag)}</span>' for tag in tags)
 
@@ -32,7 +45,7 @@ def link_list(links: dict[str, str]) -> str:
     items = []
     for label, url in links.items():
         if url:
-            items.append(f'<a class="text-link" href="{e(url)}">{e(label.title())}</a>')
+            items.append(f'<a class="text-link" href="{e(href(url))}">{e(label.title())}</a>')
     return "".join(items)
 
 
@@ -77,6 +90,10 @@ def layout(title: str, active: str, body: str) -> str:
 
 def hero() -> str:
     interests = "".join(f"<li>{e(item)}</li>" for item in SITE["interests"])
+    internship_title = e(EXPERIENCE[0]["organization"])
+    internship_url = EXPERIENCE[0].get("url")
+    if internship_url and internship_url != "#":
+        internship_title = f'<a class="text-link" href="{e(href(internship_url))}">{internship_title}</a>'
     return f"""
 <section class="hero">
   <aside class="profile-panel">
@@ -105,7 +122,7 @@ def hero() -> str:
       </section>
       <section>
         <p class="mini-label">Internship</p>
-        <h2>{e(EXPERIENCE[0]["organization"])}</h2>
+        <h2>{internship_title}</h2>
         <p>{e(EXPERIENCE[0]["role"])}</p>
         <span>{e(EXPERIENCE[0]["period"])}</span>
       </section>

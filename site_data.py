@@ -71,6 +71,7 @@ EDUCATION = [
 EXPERIENCE = [
     {
         "organization": "SJTU HIROL-Lab",
+        "url": "hirol.sjtu.edu.cn",
         "role": "Research Intern",
         "period": "2025 - Present",
         "details": (
@@ -88,7 +89,14 @@ NOTES = [
         "tags": ["flow matching", "learning-note"],
         "url": "notes/flow_matching_note.pdf",
     },
-
+    {
+        "title": "RL Note",
+        "date": "2026-03-20",
+        "summary": "Math Foundation of Reinforcement Learning",
+        "image": "assets/img/project-rl.svg",
+        "tags": ["RL", "learning-note"],
+        "url": "notes/rl_note.pdf",
+    },
 ]
 
 COURSES = [
