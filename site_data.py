@@ -6,7 +6,7 @@ SITE = {
     "email": "pocket.chen0121@gmail.com",
     "github": "https://github.com/ZhongchunChen",
     "scholar": "#",
-    "avatar": "assets/img/czc.jpg",
+    "avatar": "assets/img/ykq.jpg",
     "intro": (
         "I am interested in artificial intelligence, robot learning, "
         ". My current work focuses on flow-matching generative model, "
