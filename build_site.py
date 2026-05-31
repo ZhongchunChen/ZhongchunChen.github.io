@@ -69,7 +69,7 @@ def layout(title: str, active: str, body: str, prefix: str = "") -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{e(SITE["name"])} personal academic homepage">
   <title>{e(title)} | {e(SITE["name"])}</title>
-  <link rel="stylesheet" href="{prefix}assets/style.css">
+  <link rel="stylesheet" href="{prefix}assets/style.css?v=3">
 </head>
 <body>
   <header class="topbar">
@@ -242,6 +242,76 @@ def reliable_grasp_page() -> str:
 """
         )
     body = f"""
+<style>
+  main {{
+    width: min(1120px, calc(100% - 48px));
+  }}
+  .reliable-hero {{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 34px;
+    align-items: end;
+    padding: 72px 0 42px;
+  }}
+  .demo-showcase,
+  .result-section,
+  .architecture-section {{
+    padding: 46px 0;
+    border-top: 1px solid var(--line);
+  }}
+  .showcase-banner {{
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    min-height: 92px;
+    margin-bottom: 24px;
+    padding: 16px 34px;
+    color: #ffffff;
+    background: #cc111f;
+  }}
+  .demo-grid {{
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 26px;
+  }}
+  .demo-card {{
+    position: relative;
+    min-height: 188px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #000000;
+  }}
+  .demo-card:nth-child(-n+4) {{
+    grid-column: span 3;
+  }}
+  .demo-card:nth-child(n+5) {{
+    grid-column: span 4;
+    min-height: 236px;
+  }}
+  .demo-card video {{
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    object-fit: cover;
+    background: #000000;
+  }}
+  .result-grid {{
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: 22px;
+  }}
+  @media (max-width: 820px) {{
+    .reliable-hero,
+    .result-grid {{
+      grid-template-columns: 1fr;
+    }}
+    .demo-card:nth-child(n) {{
+      grid-column: span 12;
+    }}
+  }}
+</style>
 <section class="reliable-hero">
   <div>
     <p class="eyebrow">Project Demo</p>
