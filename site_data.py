@@ -6,7 +6,7 @@ SITE = {
     "email": "pocket.chen0121@gmail.com",
     "github": "https://github.com/ZhongchunChen",
     "scholar": "#",
-    "avatar": "assets/img/profile-placeholder.svg",
+    "avatar": "assets/img/czc.jpg",
     "intro": (
         "I am interested in artificial intelligence, robot learning, "
         ". My current work focuses on flow-matching generative model, "
@@ -36,18 +36,22 @@ PUBLICATIONS = [
 ]
 
 PROJECTS = [
-    # {
-    #     "title": "Learning-based Robot Control",
-    #     "period": "2025 - Present",
-    #     "description": (
-    #         "Developed learning pipelines for robot control experiments, including "
-    #         "policy training, evaluation dashboards, and reproducible baselines."
-    #     ),
-    #     "image": "assets/img/project-robotics.svg",
-    #     "links": {"demo": "#", "code": "#"},
-    #     "tags": ["robotics", "rl"],
-    # },
-
+    {
+        "title": "Goal-Conditioned VLA based on pi_0.5",
+        "period": "2025.09 - 2025.12",
+        "description": (
+            "Developed a goal-conditioned robotic grasping system combining "
+            "YOLO11-Seg with the pi_0.5 VLA model. Resolved the VLA model's "
+            "high sensitivity to text prompts by introducing an explicit visual "
+            "anchoring mechanism, significantly boosting grasping reliability "
+            "on a physical FR3 robot."
+        ),
+        "image": "assets/img/reliable_grasp.png",
+        "url": "reliable_grasp/",
+        "video": "assets/content/projects/reliable_grasp_demo.mp4",
+        "links": {"demo": "reliable_grasp/"},
+        "tags": ["robotics", "vla", "grasping"],
+    },
 ]
 
 REWARDS = [
@@ -85,7 +89,7 @@ NOTES = [
         "title": "Flow-Matching Note",
         "date": "2026-05-19",
         "summary": "flow matching and diffusion generative model's mathematical principles.",
-        "image": "assets/img/project-rl.svg",
+        "image": "assets/img/flow_matching_note.png",
         "tags": ["flow matching", "learning-note"],
         "url": "notes/flow_matching_note.pdf",
     },
@@ -93,23 +97,13 @@ NOTES = [
         "title": "RL Note",
         "date": "2026-03-20",
         "summary": "Math Foundation of Reinforcement Learning",
-        "image": "assets/img/project-rl.svg",
+        "image": "assets/img/RL_note.png",
         "tags": ["RL", "learning-note"],
         "url": "notes/rl_note.pdf",
     },
 ]
 
-COURSES = [
-    {
-        "code": "NULL",
-        "title": "NULL",
-        "term": "SJTU 2025 Fall",
-        "summary": "Assignments, reading notes, and selected implementation references.",
-        "image": "assets/img/project-notes.svg",
-        "tags": ["sjtu-course", "ml"],
-        "url": "#",
-    },
-]
+COURSES = []
 
 LIFE_RECORDS = [
     {

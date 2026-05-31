@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zhongchun Chen personal academic homepage">
+  <title>Reliable Grasp | Zhongchun Chen</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">Zhongchun Chen</a>
+    <nav><a class="active" href="../index.html">Home</a><a class="" href="../notes.html">Note</a><a class="" href="../life.html">Life</a></nav>
+  </header>
+  <main>
+    
+<section class="reliable-hero">
+  <div>
+    <p class="eyebrow">Project Demo</p>
+    <h1>Goal-Conditioned VLA based on pi_0.5</h1>
+    <p>Developed a goal-conditioned robotic grasping system combining YOLO11-Seg with the pi_0.5 VLA model. Resolved the VLA model&#x27;s high sensitivity to text prompts by introducing an explicit visual anchoring mechanism, significantly boosting grasping reliability on a physical FR3 robot.</p>
+    <div class="item-row"><span class="tag">robotics</span><span class="tag">vla</span><span class="tag">grasping</span></div>
+  </div>
+  <div class="project-facts" aria-label="Project facts">
+    <span>2025.09 - 2025.12</span>
+    <span>YOLO11-Seg + pi_0.5 VLA</span>
+    <span>Physical FR3 Robot</span>
+  </div>
+</section>
+<section class="demo-showcase">
+  <div class="showcase-banner">
+    <div class="seal">SJTU</div>
+    <h2>Demo Display</h2>
+    <div class="banner-mark" aria-hidden="true"><span></span><span></span></div>
+  </div>
+  <div class="demo-grid">
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_01.jpg?v=2" aria-label="Top-view yellow target">
+    <source src="../assets/content/projects/reliable_grasp/demo_01.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_02.jpg?v=2" aria-label="Top-view blue target">
+    <source src="../assets/content/projects/reliable_grasp/demo_02.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_03.jpg?v=2" aria-label="Top-view white target">
+    <source src="../assets/content/projects/reliable_grasp/demo_03.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_04.jpg?v=2" aria-label="Top-view black target">
+    <source src="../assets/content/projects/reliable_grasp/demo_04.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_05.jpg?v=2" aria-label="FR3 grasping scene A">
+    <source src="../assets/content/projects/reliable_grasp/demo_05.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_06.jpg?v=2" aria-label="FR3 grasping scene B">
+    <source src="../assets/content/projects/reliable_grasp/demo_06.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/demo_07.jpg?v=2" aria-label="Full workspace scene">
+    <source src="../assets/content/projects/reliable_grasp/demo_07.mp4?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+</div>
+</section>
+<section class="result-section">
+  <div class="section-heading compact">
+    <p class="eyebrow">Results</p>
+    <h2>Segmentation and Progress Comparison</h2>
+  </div>
+  <div class="result-grid">
+    <figure class="figure-placeholder large">
+      <img src="../assets/content/projects/reliable_grasp/chart_segmentation.png" alt="Segmentation result comparison chart" onerror="this.hidden=true">
+      <figcaption>
+        <strong>Figure 8. Segmentation Results</strong>
+      </figcaption>
+    </figure>
+    <figure class="figure-placeholder">
+      <img src="../assets/content/projects/reliable_grasp/chart_progress.png" alt="Progress comparison chart" onerror="this.hidden=true">
+      <figcaption>
+        <strong>Figure 9. Progress Comparison</strong>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+<section class="architecture-section">
+  <div class="section-heading compact">
+    <p class="eyebrow">System</p>
+    <h2>Goal-Conditioned Grasping System Architecture</h2>
+  </div>
+  <figure class="figure-placeholder architecture-figure">
+    <img src="../assets/content/projects/reliable_grasp/system_architecture.png" alt="Goal-conditioned grasping system architecture" onerror="this.hidden=true">
+    <figcaption>
+      <strong>System Architecture</strong>
+    </figcaption>
+  </figure>
+</section>
+<script>
+  const playDemos = () => {
+    document.querySelectorAll('.autoplay-demo').forEach((video) => {
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.play().catch(() => {});
+    });
+  };
+  document.addEventListener('DOMContentLoaded', playDemos);
+  window.addEventListener('load', playDemos);
+</script>
+
+  </main>
+  <footer>
+    <span>Built with Python for GitHub Pages.</span>
+    <span>Last updated: 2026</span>
+  </footer>
+</body>
+</html>

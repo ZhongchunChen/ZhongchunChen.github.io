@@ -49,19 +49,19 @@ def link_list(links: dict[str, str]) -> str:
     return "".join(items)
 
 
-def nav(active: str) -> str:
+def nav(active: str, prefix: str = "") -> str:
     links = [
         ("index.html", "Home"),
         ("notes.html", "Note"),
         ("life.html", "Life"),
     ]
     return "".join(
-        f'<a class="{"active" if label == active else ""}" href="{href}">{label}</a>'
+        f'<a class="{"active" if label == active else ""}" href="{prefix}{href}">{label}</a>'
         for href, label in links
     )
 
 
-def layout(title: str, active: str, body: str) -> str:
+def layout(title: str, active: str, body: str, prefix: str = "") -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,12 +69,12 @@ def layout(title: str, active: str, body: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{e(SITE["name"])} personal academic homepage">
   <title>{e(title)} | {e(SITE["name"])}</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="{prefix}assets/style.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="index.html">{e(SITE["name"])}</a>
-    <nav>{nav(active)}</nav>
+    <a class="brand" href="{prefix}index.html">{e(SITE["name"])}</a>
+    <nav>{nav(active, prefix)}</nav>
   </header>
   <main>
     {body}
@@ -110,7 +110,7 @@ def hero() -> str:
     <p class="contact-line">Email: <a href="mailto:{e(SITE["email"])}">{e(SITE["email"])}</a></p>
     <div class="actions">
       <a class="button primary" href="mailto:{e(SITE["email"])}">Email</a>
-      <a class="button" href="{e(SITE["github"])}">GitHub</a>
+      <a class="button primary" href="{e(SITE["github"])}">GitHub</a>
       <a class="button" href="{e(SITE["scholar"])}">Google Scholar</a>
     </div>
     <div class="hero-details">
@@ -135,13 +135,17 @@ def hero() -> str:
 def media_items(items: list[dict[str, object]]) -> str:
     rendered = []
     for item in items:
+        title = e(item["title"])
+        item_url = item.get("url")
+        if item_url:
+            title = f'<a href="{e(href(item_url))}">{title}</a>'
         rendered.append(
             f"""
 <article class="media-item">
   <img src="{e(item["image"])}" alt="">
   <div>
     <div class="item-meta">{e(item.get("period") or item.get("venue") or "")}</div>
-    <h3>{e(item["title"])}</h3>
+    <h3>{title}</h3>
     <p>{e(item["description"])}</p>
     <div class="item-row">{tag_list(item.get("tags", []))}</div>
     <div class="item-row">{link_list(item.get("links", {}))}</div>
@@ -210,6 +214,118 @@ def index_page() -> str:
 </section>
 """
     return layout("Home", "Home", body)
+
+
+def reliable_grasp_page() -> str:
+    project = next(
+        item for item in PROJECTS if item.get("url") == "reliable_grasp/"
+    )
+    demo_cards = [
+        ("demo_01.mp4", "demo_01.jpg", "Top-view yellow target"),
+        ("demo_02.mp4", "demo_02.jpg", "Top-view blue target"),
+        ("demo_03.mp4", "demo_03.jpg", "Top-view white target"),
+        ("demo_04.mp4", "demo_04.jpg", "Top-view black target"),
+        ("demo_05.mp4", "demo_05.jpg", "FR3 grasping scene A"),
+        ("demo_06.mp4", "demo_06.jpg", "FR3 grasping scene B"),
+        ("demo_07.mp4", "demo_07.jpg", "Full workspace scene"),
+    ]
+    demos = []
+    for index, (video_name, poster_name, label) in enumerate(demo_cards, start=1):
+        demos.append(
+            f"""
+<article class="demo-card">
+  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/{poster_name}?v=2" aria-label="{e(label)}">
+    <source src="../assets/content/projects/reliable_grasp/{video_name}?v=2" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</article>
+"""
+        )
+    body = f"""
+<section class="reliable-hero">
+  <div>
+    <p class="eyebrow">Project Demo</p>
+    <h1>{e(project["title"])}</h1>
+    <p>{e(project["description"])}</p>
+    <div class="item-row">{tag_list(project.get("tags", []))}</div>
+  </div>
+  <div class="project-facts" aria-label="Project facts">
+    <span>{e(project["period"])}</span>
+    <span>YOLO11-Seg + pi_0.5 VLA</span>
+    <span>Physical FR3 Robot</span>
+  </div>
+</section>
+<section class="demo-showcase">
+  <div class="showcase-banner">
+    <div class="seal">SJTU</div>
+    <h2>Demo Display</h2>
+    <div class="banner-mark" aria-hidden="true"><span></span><span></span></div>
+  </div>
+  <div class="demo-grid">{"".join(demos)}</div>
+</section>
+<section class="result-section">
+  <div class="section-heading compact">
+    <p class="eyebrow">Results</p>
+    <h2>Segmentation and Progress Comparison</h2>
+  </div>
+  <div class="result-grid">
+    <figure class="figure-placeholder large">
+      <img src="../assets/content/projects/reliable_grasp/chart_segmentation.png" alt="Segmentation result comparison chart" onerror="this.hidden=true">
+      <figcaption>
+        <strong>Figure 8. Segmentation Results</strong>
+      </figcaption>
+    </figure>
+    <figure class="figure-placeholder">
+      <img src="../assets/content/projects/reliable_grasp/chart_progress.png" alt="Progress comparison chart" onerror="this.hidden=true">
+      <figcaption>
+        <strong>Figure 9. Progress Comparison</strong>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+<section class="architecture-section">
+  <div class="section-heading compact">
+    <p class="eyebrow">System</p>
+    <h2>Goal-Conditioned Grasping System Architecture</h2>
+  </div>
+  <figure class="figure-placeholder architecture-figure">
+    <img src="../assets/content/projects/reliable_grasp/system_architecture.png" alt="Goal-conditioned grasping system architecture" onerror="this.hidden=true">
+    <figcaption>
+      <strong>System Architecture</strong>
+    </figcaption>
+  </figure>
+</section>
+<script>
+  const playDemos = () => {{
+    document.querySelectorAll('.autoplay-demo').forEach((video) => {{
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.play().catch(() => {{}});
+    }});
+  }};
+  document.addEventListener('DOMContentLoaded', playDemos);
+  window.addEventListener('load', playDemos);
+</script>
+"""
+    return layout("Reliable Grasp", "Home", body, prefix="../")
+
+
+def reliable_grasp_redirect_page() -> str:
+    return """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=reliable_grasp/">
+  <title>Reliable Grasp | Redirect</title>
+  <link rel="canonical" href="reliable_grasp/">
+</head>
+<body>
+  <p><a href="reliable_grasp/">Open Reliable Grasp demo page</a></p>
+</body>
+</html>
+"""
 
 
 def filter_script() -> str:
@@ -352,9 +468,13 @@ def main() -> None:
             LIFE_RECORDS,
             "Life",
         ),
+        "reliable_grasp/index.html": reliable_grasp_page(),
+        "reliable_grasp.html": reliable_grasp_redirect_page(),
     }
     for filename, content in pages.items():
-        (ROOT / filename).write_text(content, encoding="utf-8")
+        path = ROOT / filename
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
 
 
 if __name__ == "__main__":
