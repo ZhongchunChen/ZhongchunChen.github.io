@@ -3,14 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <meta name="description" content="Zhongchun Chen personal academic homepage">
   <title>Note | Zhongchun Chen</title>
-  <link rel="stylesheet" href="assets/style.css?v=3">
+  <link rel="stylesheet" href="assets/style.css?v=4">
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    })();
+  </script>
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="index.html">Zhongchun Chen</a>
-    <nav><a class="" href="index.html">Home</a><a class="active" href="notes.html">Note</a><a class="" href="life.html">Life</a></nav>
+    <div class="topbar-actions">
+      <nav><a class="" href="index.html">Home</a><a class="active" href="notes.html">Note</a><a class="" href="life.html">Life</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+        <span class="theme-toggle-text">Dark</span>
+      </button>
+    </div>
   </header>
   <main>
     
@@ -117,5 +131,27 @@
     <span>Built with Python for GitHub Pages.</span>
     <span>Last updated: 2026</span>
   </footer>
+  <script>
+    (() => {
+      const toggle = document.querySelector('.theme-toggle');
+      const label = document.querySelector('.theme-toggle-text');
+      const root = document.documentElement;
+
+      const applyTheme = (theme) => {
+        root.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        const isDark = theme === 'dark';
+        if (toggle) toggle.setAttribute('aria-pressed', String(isDark));
+        if (label) label.textContent = isDark ? 'Light' : 'Dark';
+      };
+
+      applyTheme(root.dataset.theme || 'light');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -67,14 +67,28 @@ def layout(title: str, active: str, body: str, prefix: str = "") -> str:
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
   <meta name="description" content="{e(SITE["name"])} personal academic homepage">
   <title>{e(title)} | {e(SITE["name"])}</title>
-  <link rel="stylesheet" href="{prefix}assets/style.css?v=3">
+  <link rel="stylesheet" href="{prefix}assets/style.css?v=4">
+  <script>
+    (() => {{
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    }})();
+  </script>
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="{prefix}index.html">{e(SITE["name"])}</a>
-    <nav>{nav(active, prefix)}</nav>
+    <div class="topbar-actions">
+      <nav>{nav(active, prefix)}</nav>
+      <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+        <span class="theme-toggle-text">Dark</span>
+      </button>
+    </div>
   </header>
   <main>
     {body}
@@ -83,6 +97,28 @@ def layout(title: str, active: str, body: str, prefix: str = "") -> str:
     <span>Built with Python for GitHub Pages.</span>
     <span>Last updated: 2026</span>
   </footer>
+  <script>
+    (() => {{
+      const toggle = document.querySelector('.theme-toggle');
+      const label = document.querySelector('.theme-toggle-text');
+      const root = document.documentElement;
+
+      const applyTheme = (theme) => {{
+        root.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        const isDark = theme === 'dark';
+        if (toggle) toggle.setAttribute('aria-pressed', String(isDark));
+        if (label) label.textContent = isDark ? 'Light' : 'Dark';
+      }};
+
+      applyTheme(root.dataset.theme || 'light');
+      if (toggle) {{
+        toggle.addEventListener('click', () => {{
+          applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        }});
+      }}
+    }})();
+  </script>
 </body>
 </html>
 """
