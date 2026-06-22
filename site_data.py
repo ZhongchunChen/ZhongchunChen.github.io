@@ -112,14 +112,7 @@ NOTES = [
 ]
 
 COURSES = [
-    {
-        "title": "SJTU NIS4307-01 Course Project: Rumor Detection System",
-        "date": "2026-06-22",
-        "summary": "NIS4307: Introduction to Artificial Intelligence Courese Project",
-        "image": "assets/img/SJTU_NIS4307-01_course_project.png",
-        "tags": ["SJTU", "course project"],
-        "url": "https://github.com/ZhongchunChen/NIS4307-01",
-    },
+    
 ]
 
 LIFE_RECORDS = [
