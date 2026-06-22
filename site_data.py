@@ -101,6 +101,17 @@ NOTES = [
         "tags": ["RL", "learning note"],
         "url": "notes/rl_note.pdf",
     },
+]
+
+COURSES = [
+    {
+        "title": "SJTU NIS1336 Course Project: Schedule Manager",
+        "date": "2025-07-22",
+        "summary": "NIS1336 Programming Practice: Courese Project",
+        "image": "assets/img/SJTU_NIS1336_course_project.png",
+        "tags": ["SJTU", "course project"],
+        "url": "https://github.com/R1bosome-He/schedule_manager",
+    },
     {
         "title": "SJTU NIS4307-01 Course Project: Rumor Detection System",
         "date": "2026-06-22",
@@ -109,10 +120,6 @@ NOTES = [
         "tags": ["SJTU", "course project"],
         "url": "https://github.com/ZhongchunChen/NIS4307-01",
     },
-]
-
-COURSES = [
-    
 ]
 
 LIFE_RECORDS = [
