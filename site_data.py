@@ -90,7 +90,7 @@ NOTES = [
         "date": "2026-05-19",
         "summary": "flow matching and diffusion generative model's mathematical principles.",
         "image": "assets/img/flow_matching_note.png",
-        "tags": ["flow matching", "learning-note"],
+        "tags": ["flow matching", "learning note"],
         "url": "notes/flow_matching_note.pdf",
     },
     {
@@ -98,12 +98,29 @@ NOTES = [
         "date": "2026-03-20",
         "summary": "Math Foundation of Reinforcement Learning",
         "image": "assets/img/RL_note.png",
-        "tags": ["RL", "learning-note"],
+        "tags": ["RL", "learning note"],
         "url": "notes/rl_note.pdf",
+    },
+    {
+        "title": "SJTU NIS4307-01 Course Project: Rumor Detection System",
+        "date": "2026-06-22",
+        "summary": "NIS4307: Introduction to Artificial Intelligence Courese Project",
+        "image": "assets/img/SJTU_NIS4307-01_course_project.png",
+        "tags": ["SJTU", "course project"],
+        "url": "https://github.com/ZhongchunChen/NIS4307-01",
     },
 ]
 
-COURSES = []
+COURSES = [
+    {
+        "title": "SJTU NIS4307-01 Course Project: Rumor Detection System",
+        "date": "2026-06-22",
+        "summary": "NIS4307: Introduction to Artificial Intelligence Courese Project",
+        "image": "assets/img/SJTU_NIS4307-01_course_project.png",
+        "tags": ["SJTU", "course project"],
+        "url": "https://github.com/ZhongchunChen/NIS4307-01",
+    },
+]
 
 LIFE_RECORDS = [
     {
