@@ -81,6 +81,13 @@ EXPERIENCE = [
         "details": (
             "Worked on Robot Learning."
         ),
+        "organization": "NUS LinSLab / RoboSciencee",
+        "url": "https://en.roboscience.co/",
+        "role": "Summer Intern",
+        "period": "2026.07 - 2026.09",
+        "details": (
+            "Worked on Dextrous Model Pretrain."
+        ),
     },
 ]
 
