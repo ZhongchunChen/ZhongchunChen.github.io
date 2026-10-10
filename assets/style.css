@@ -207,11 +207,20 @@ footer {
 }
 
 .hero-details section {
-  min-height: 128px;
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
+}
+
+.hero-details-list {
+  display: grid;
+  gap: 16px;
+}
+
+.hero-detail-item + .hero-detail-item {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
 
 .hero-details h2 {

@@ -126,10 +126,38 @@ def layout(title: str, active: str, body: str, prefix: str = "") -> str:
 
 def hero() -> str:
     interests = "".join(f"<li>{e(item)}</li>" for item in SITE["interests"])
-    internship_title = e(EXPERIENCE[0]["organization"])
-    internship_url = EXPERIENCE[0].get("url")
-    if internship_url and internship_url != "#":
-        internship_title = f'<a class="text-link" href="{e(href(internship_url))}">{internship_title}</a>'
+
+    education_items = []
+    for item in EDUCATION:
+        education_items.append(
+            f"""
+            <article class="hero-detail-item">
+              <h2>{e(item["school"])}</h2>
+              <p>{e(item["degree"])}</p>
+              <span>{e(item["period"])}</span>
+            </article>
+            """.strip()
+        )
+
+    experience_items = []
+    for item in EXPERIENCE:
+        organization = e(item["organization"])
+        organization_url = item.get("url")
+        if organization_url and organization_url != "#":
+            organization = f'<a class="text-link" href="{e(href(organization_url))}">{organization}</a>'
+        experience_items.append(
+            f"""
+            <article class="hero-detail-item">
+              <h2>{organization}</h2>
+              <p>{e(item["role"])}</p>
+              <span>{e(item["period"])}</span>
+            </article>
+            """.strip()
+        )
+
+    education_html = "\n".join(education_items)
+    experience_html = "\n".join(experience_items)
+
     return f"""
 <section class="hero">
   <aside class="profile-panel">
@@ -152,15 +180,11 @@ def hero() -> str:
     <div class="hero-details">
       <section>
         <p class="mini-label">Education</p>
-        <h2>{e(EDUCATION[0]["school"])}</h2>
-        <p>{e(EDUCATION[0]["degree"])}</p>
-        <span>{e(EDUCATION[0]["period"])}</span>
+        <div class="hero-details-list">{education_html}</div>
       </section>
       <section>
         <p class="mini-label">Internship</p>
-        <h2>{internship_title}</h2>
-        <p>{e(EXPERIENCE[0]["role"])}</p>
-        <span>{e(EXPERIENCE[0]["period"])}</span>
+        <div class="hero-details-list">{experience_html}</div>
       </section>
     </div>
   </div>

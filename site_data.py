@@ -81,6 +81,8 @@ EXPERIENCE = [
         "details": (
             "Worked on Robot Learning."
         ),
+    },
+    {
         "organization": "NUS LinSLab / RoboSciencee",
         "url": "https://en.roboscience.co/",
         "role": "Summer Intern",
