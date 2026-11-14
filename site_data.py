@@ -8,7 +8,7 @@ SITE = {
     "scholar": "#",
     "cv": "#",
     "linkedin": "#",
-    "x": "#",
+    "x": "https://x.com/PocketChen_/",
     "avatar": "assets/img/ZhongchunChen.jpg",
     "intro": (
         "Hi there! Welcome to my home page. My name is Zhongchun, though I "
