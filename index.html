@@ -1,134 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Zhongchun Chen personal academic homepage">
-  <title>Home | Zhongchun Chen</title>
-  <link rel="stylesheet" href="assets/style.css?v=4">
-  <script>
-    (() => {
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
-    })();
-  </script>
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="index.html">Zhongchun Chen</a>
-    <div class="topbar-actions">
-      <nav><a class="active" href="index.html">Home</a><a class="" href="notes.html">Note</a><a class="" href="life.html">Life</a></nav>
-      <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
-        <span class="theme-toggle-icon" aria-hidden="true"></span>
-        <span class="theme-toggle-text">Dark</span>
-      </button>
-    </div>
-  </header>
-  <main>
-    
-
-<section class="hero">
-  <aside class="profile-panel">
-    <img src="assets/img/czc.jpg" alt="Zhongchun Chen portrait">
-    <div>
-      <strong>Shanghai, China</strong>
-      <ul><li>Robot Learning</li><li>Generative Model</li><li>Representation Learning</li></ul>
-    </div>
-  </aside>
-  <div class="hero-copy">
-    <p class="eyebrow">Undergraduate Researcher · Shanghai Jiao Tong University</p>
-    <h1>Zhongchun Chen</h1>
-    <p class="intro">I am interested in artificial intelligence, robot learning, . My current work focuses on flow-matching generative model, Vision-Language-Action Model(VLA), World Action Model(WAM) andrepresentation learning, which I believe deeply</p>
-    <p class="contact-line">Email: <a href="mailto:pocket.chen0121@gmail.com">pocket.chen0121@gmail.com</a></p>
-    <div class="actions">
-      <a class="button primary" href="mailto:pocket.chen0121@gmail.com">Email</a>
-      <a class="button primary" href="https://github.com/ZhongchunChen">GitHub</a>
-      <a class="button" href="#">Google Scholar</a>
-    </div>
-    <div class="hero-details">
-      <section>
-        <p class="mini-label">Education</p>
-        <div class="hero-details-list"><article class="hero-detail-item">
-              <h2>Shanghai Jiao Tong University</h2>
-              <p>B.Eng. / B.S. in School of Computer Science</p>
-              <span>2024 - Present</span>
-            </article></div>
-      </section>
-      <section>
-        <p class="mini-label">Internship</p>
-        <div class="hero-details-list"><article class="hero-detail-item">
-              <h2><a class="text-link" href="https://hirol.sjtu.edu.cn">SJTU HIROL-Lab</a></h2>
-              <p>Research Intern</p>
-              <span>2025 - Present</span>
-            </article>
-<article class="hero-detail-item">
-              <h2><a class="text-link" href="https://en.roboscience.co/">NUS LinSLab / RoboSciencee</a></h2>
-              <p>Summer Intern</p>
-              <span>2026.07 - 2026.09</span>
-            </article></div>
-      </section>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-heading">
-    <p class="eyebrow">Publications</p>
-  </div>
-  <div class="stack"></div>
-</section>
-<section class="section">
-  <div class="section-heading">
-    <p class="eyebrow">Projects</p>
-  </div>
-  <div class="stack">
-<article class="media-item">
-  <img src="assets/img/reliable_grasp.png" alt="">
-  <div>
-    <div class="item-meta">2025.09 - 2025.12</div>
-    <h3><a href="reliable_grasp/">Goal-Conditioned VLA based on pi_0.5</a></h3>
-    <p>Developed a goal-conditioned robotic grasping system combining YOLO11-Seg with the pi_0.5 VLA model. Resolved the VLA model&#x27;s high sensitivity to text prompts by introducing an explicit visual anchoring mechanism, significantly boosting grasping reliability on a physical FR3 robot.</p>
-    <div class="item-row"><span class="tag">robotics</span><span class="tag">vla</span><span class="tag">grasping</span></div>
-    <div class="item-row"><a class="text-link" href="reliable_grasp/">Demo</a></div>
-  </div>
-</article>
-</div>
-</section>
-<section class="section">
-  <div class="section-heading">
-    <p class="eyebrow">Rewards</p>
-  </div>
-  <div class="timeline"></div>
-</section>
-
-  </main>
-  <footer>
-    <span>Built with Python for GitHub Pages.</span>
-    <span>Last updated: 2026</span>
-  </footer>
-  <script>
-    (() => {
-      const toggle = document.querySelector('.theme-toggle');
-      const label = document.querySelector('.theme-toggle-text');
-      const root = document.documentElement;
-
-      const applyTheme = (theme) => {
-        root.dataset.theme = theme;
-        localStorage.setItem('theme', theme);
-        const isDark = theme === 'dark';
-        if (toggle) toggle.setAttribute('aria-pressed', String(isDark));
-        if (label) label.textContent = isDark ? 'Light' : 'Dark';
-      };
-
-      applyTheme(root.dataset.theme || 'light');
-      if (toggle) {
-        toggle.addEventListener('click', () => {
-          applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
-        });
-      }
-    })();
-  </script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Zhongchun Chen — academic homepage"><title>About | Zhongchun Chen</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem("theme")||"light";</script>
+<link rel="stylesheet" href="assets/style.css?v=8"><link rel="stylesheet" href="assets/theme.css?v=1"></head><body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html">Zhongchun Chen</a><div class="nav-actions"><nav><a class="active" href="index.html">About</a><a class="" href="research.html">Research</a><a class="" href="experience.html">Experience</a><a class="" href="projects.html">Projects</a><a class="" href="life.html">Lifes</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme"><span aria-hidden="true">☾</span></button></div></div></header>
+<main><section class="about"><figure class="portrait-figure"><img class="portrait" src="assets/img/ZhongchunChen.jpg" alt="Portrait of Zhongchun Chen"><figcaption>Picture taken in May 2025</figcaption></figure><div class="about-copy"><h1>Zhongchun Chen</h1><p class="role">Undergraduate Researcher · Shanghai Jiao Tong University</p><p class="intro-greeting">Hi there! Welcome to my home page. My name is Zhongchun, though I usually go by <strong>Pocket</strong>.</p><p>I am broadly interested in artificial intelligence and robot learning, and specifically in Vision-Language-Action (<strong>VLA</strong>) models, <strong>active perception</strong>, <strong>flow matching</strong>, and reinforcement learning (<strong>RL</strong>). I am currently an undergraduate student at Shanghai Jiao Tong University.</p><p>Outside of research, I enjoy <strong>running</strong> 🏃, <strong>hiking</strong> 🧗, exploring good <strong>food</strong> 🍜, and playing <strong>Golden Spatula</strong> 🪏.</p><p>You're always <strong>welcome</strong> to chat with me about research or anything else!</p><p>Email: <a href="mailto:pocket-chen@sjtu.edu.cn">pocket-chen@sjtu.edu.cn</a></p><div class="socials"><a href="#" class=placeholder-link>CV</a> <span>/</span> <a href="#" class=placeholder-link>Google Scholar</a> <span>/</span> <a href="https://github.com/ZhongchunChen">Github</a> <span>/</span> <a href="#" class=placeholder-link>Linkedin</a> <span>/</span> <a href="#" class=placeholder-link>X</a></div></div></section>
+<section class="content-section"><h2>Updates</h2><ul class="updates"><li><time>2026.09</time><span>I will join NUS LinSLab / RoboScience as a summer research intern.</span></li><li><time>2025.12</time><span>Completed a goal-conditioned VLA project for reliable robotic grasping.</span></li><li><time>2025.09</time><span>Joined SJTU HIROL-Lab as a research intern.</span></li></ul></section>
+<section class="content-section"><div class="heading-row"><h2>Publications</h2><a href="research.html">View all →</a></div><article class="publication"><img src="assets/img/project-robotics.svg" alt=""><div><h3>Publication title placeholder</h3><p class="authors">Zhongchun Chen, Collaborator A, Collaborator B</p><p class="venue">Conference / Journal, 2026</p><div class="pub-links"><a href="#">[paper]</a> <a href="#">[code]</a></div></div></article></section></main><footer>© 2026 Zhongchun Chen. Built for GitHub Pages.</footer>
+<script>
+const themeButton=document.querySelector(".theme-toggle");
+const applyTheme=theme=>{document.documentElement.dataset.theme=theme;localStorage.setItem("theme",theme);const dark=theme==="dark";themeButton.innerHTML=dark?"<span aria-hidden='true'>☀</span>":"<span aria-hidden='true'>☾</span>";themeButton.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");};
+applyTheme(document.documentElement.dataset.theme);
+themeButton.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+</script></body></html>

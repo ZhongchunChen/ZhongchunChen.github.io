@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Zhongchun Chen — academic homepage"><title>Projects | Zhongchun Chen</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem("theme")||"light";</script>
+<link rel="stylesheet" href="assets/style.css?v=8"><link rel="stylesheet" href="assets/theme.css?v=1"></head><body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html">Zhongchun Chen</a><div class="nav-actions"><nav><a class="" href="index.html">About</a><a class="" href="research.html">Research</a><a class="" href="experience.html">Experience</a><a class="active" href="projects.html">Projects</a><a class="" href="life.html">Lifes</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme"><span aria-hidden="true">☾</span></button></div></div></header>
+<main><section class="page-intro"><h1>Projects</h1><p>Selected research projects, course projects, and study notes.</p></section><div class="filters"><button class="active" data-filter="all">All</button><button data-filter="Course">Course</button><button data-filter="Notes">Notes</button><button data-filter="Robot">Robot</button></div><script>
+window.addEventListener("DOMContentLoaded", () => {
+  const buttons = [...document.querySelectorAll(".filters button")];
+  const cards = [...document.querySelectorAll(".portfolio-card")];
+  const grid = document.querySelector(".portfolio-grid");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!grid || !cards.length) return;
+  grid.classList.add("isotope-grid", "isotope-no-transition");
+  let currentFilter = "all";
+  const layout = () => {
+    const gap = 18;
+    const columns = window.innerWidth <= 480 ? 1 : window.innerWidth <= 760 ? 2 : 3;
+    const width = (grid.clientWidth - gap * (columns - 1)) / columns;
+    const height = width * .75;
+    let visibleIndex = 0;
+    cards.forEach(card => {
+      const visible = currentFilter === "all" || card.dataset.tags.split("|").includes(currentFilter);
+      card.style.width = width + "px";
+      card.style.height = height + "px";
+      if (visible) {
+        const column = visibleIndex % columns;
+        const row = Math.floor(visibleIndex / columns);
+        const x = column * (width + gap);
+        const y = row * (height + gap);
+        card.dataset.x = x;
+        card.dataset.y = y;
+        card.classList.remove("isotope-hidden");
+        card.style.transform = "translate3d(" + x + "px," + y + "px,0) scale(1)";
+        visibleIndex += 1;
+      } else {
+        const x = Number(card.dataset.x || 0);
+        const y = Number(card.dataset.y || 0);
+        card.classList.add("isotope-hidden");
+        card.style.transform = "translate3d(" + x + "px," + y + "px,0) scale(.001)";
+      }
+    });
+    const rows = Math.ceil(visibleIndex / columns);
+    grid.style.height = (rows ? rows * height + (rows - 1) * gap : 0) + "px";
+  };
+  layout();
+  requestAnimationFrame(() => requestAnimationFrame(() => grid.classList.remove("isotope-no-transition")));
+  buttons.forEach(button => button.addEventListener("click", event => {
+    event.preventDefault();
+    currentFilter = button.dataset.filter;
+    buttons.forEach(item => item.classList.toggle("active", item === button));
+    layout();
+  }));
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(layout, 80);
+  });
+  if (reducedMotion) grid.classList.add("isotope-no-transition");
+});
+</script><section class="portfolio-grid"><a class="portfolio-card" data-tags="Robot" href="reliable_grasp/"><img src="assets/img/reliable_grasp.png" alt=""><span class="card-overlay"><strong>Goal-Conditioned VLA based on pi_0.5</strong><small>Developed a goal-conditioned robotic grasping system combining YOLO11-Seg with the pi_0.5 VLA model. Resolved the VLA model&#x27;s high sensitivity to text prompts by introducing an explicit visual anchoring mechanism, significantly boosting grasping reliability on a physical FR3 robot.</small></span></a><a class="portfolio-card cover-contain cover-zoom" data-tags="Course" href="https://github.com/R1bosome-He/schedule_manager"><img src="assets/img/SJTU_NIS1336_course_project.png" alt=""><span class="card-overlay"><strong>Schedule Manager</strong><small>NIS1336 Programming Practice: Courese Project</small></span></a><a class="portfolio-card" data-tags="Course" href="https://github.com/ZhongchunChen/NIS4307-01"><img src="assets/img/SJTU_NIS4307-01_course_project.png" alt=""><span class="card-overlay"><strong>Rumor Detection System</strong><small>NIS4307: Introduction to Artificial Intelligence Courese Project</small></span></a><a class="portfolio-card" data-tags="Notes" href="notes/flow_matching_note.pdf"><img src="assets/img/flow_matching_note.png" alt=""><span class="card-overlay"><strong>Flow-Matching Note</strong><small>flow matching and diffusion generative model&#x27;s mathematical principles.</small></span></a><a class="portfolio-card cover-contain" data-tags="Notes" href="notes/rl_note.pdf"><img src="assets/img/RL_note.png" alt=""><span class="card-overlay"><strong>RL Note</strong><small>Math Foundation of Reinforcement Learning</small></span></a></section></main><footer>© 2026 Zhongchun Chen. Built for GitHub Pages.</footer>
+<script>
+const themeButton=document.querySelector(".theme-toggle");
+const applyTheme=theme=>{document.documentElement.dataset.theme=theme;localStorage.setItem("theme",theme);const dark=theme==="dark";themeButton.innerHTML=dark?"<span aria-hidden='true'>☀</span>":"<span aria-hidden='true'>☾</span>";themeButton.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");};
+applyTheme(document.documentElement.dataset.theme);
+themeButton.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+</script></body></html>

@@ -1,611 +1,178 @@
-from __future__ import annotations
-
 from html import escape
 from pathlib import Path
-from typing import Iterable
-
-from site_data import (
-    COURSES,
-    EDUCATION,
-    EXPERIENCE,
-    LIFE_RECORDS,
-    NOTES,
-    PROJECTS,
-    PUBLICATIONS,
-    REWARDS,
-    SITE,
-)
-
+from site_data import COURSES, EDUCATION, EXPERIENCE, LIFE_RECORDS, NOTES, PROJECTS, PUBLICATIONS, SITE, UPDATES
 
 ROOT = Path(__file__).parent
 
+def e(value): return escape(str(value), quote=True)
+def href(value):
+    value = str(value or "#").strip()
+    if value == "#" or value.startswith(("http://", "https://", "mailto:", "/", "#")) or "/" in value or value.endswith((".html", ".pdf")): return value
+    return f"https://{value}"
 
-def e(value: object) -> str:
-    return escape(str(value), quote=True)
+def nav(active, prefix=""):
+    links = [("index.html", "About"), ("research.html", "Research"), ("experience.html", "Experience"), ("projects.html", "Projects"), ("life.html", "Lifes")]
+    return "".join(f'<a class="{"active" if label == active else ""}" href="{prefix}{url}">{label}</a>' for url, label in links)
 
+def layout(title, active, body, prefix=""):
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="{e(SITE['name'])} — academic homepage"><title>{e(title)} | {e(SITE['name'])}</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem("theme")||"light";</script>
+<link rel="stylesheet" href="{prefix}assets/style.css?v=8"><link rel="stylesheet" href="{prefix}assets/theme.css?v=1"></head><body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="{prefix}index.html">{e(SITE['name'])}</a><div class="nav-actions"><nav>{nav(active,prefix)}</nav><button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme"><span aria-hidden="true">☾</span></button></div></div></header>
+<main>{body}</main><footer>© 2026 {e(SITE['name'])}. Built for GitHub Pages.</footer>
+<script>
+const themeButton=document.querySelector(".theme-toggle");
+const applyTheme=theme=>{{document.documentElement.dataset.theme=theme;localStorage.setItem("theme",theme);const dark=theme==="dark";themeButton.innerHTML=dark?"<span aria-hidden='true'>☀</span>":"<span aria-hidden='true'>☾</span>";themeButton.setAttribute("aria-label",dark?"Switch to light mode":"Switch to dark mode");}};
+applyTheme(document.documentElement.dataset.theme);
+themeButton.addEventListener("click",()=>applyTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+</script></body></html>'''
 
-def href(value: object) -> str:
-    url = str(value).strip()
-    if (
-        not url
-        or url == "#"
-        or url.startswith(("#", "/", "mailto:", "http://", "https://"))
-        or url.endswith((".html", ".pdf"))
-        or "/" in url
-    ):
-        return url or "#"
-    return f"https://{url}"
+def social_links():
+    links=[("CV",SITE.get("cv","#")),("Google Scholar",SITE.get("scholar","#")),("Github",SITE.get("github","#")),("Linkedin",SITE.get("linkedin","#")),("X",SITE.get("x","#"))]
+    return ' <span>/</span> '.join(f'<a href="{e(href(url))}"{(" class=placeholder-link" if url=="#" else "")}>{label}</a>' for label,url in links)
 
+def pub_cards(items, summaries=True):
+    if not items:
+        items=[{"title":"Publication title placeholder","authors":"Zhongchun Chen, Collaborator A, Collaborator B","venue":"Conference / Journal, 2026","description":"A short summary of the problem, approach, and key result will appear here.","image":"assets/img/project-robotics.svg","links":{"paper":"#","code":"#"}}]
+    out=[]
+    for p in items:
+        links=' '.join(f'<a href="{e(href(u))}">[{e(k)}]</a>' for k,u in p.get("links",{}).items())
+        summary=f'<p class="summary">{e(p.get("description","Summary placeholder."))}</p>' if summaries else ''
+        out.append(f'''<article class="publication"><img src="{e(p.get('image','assets/img/project-robotics.svg'))}" alt=""><div><h3>{e(p['title'])}</h3><p class="authors">{e(p.get('authors','Zhongchun Chen, collaborators'))}</p><p class="venue">{e(p.get('venue','Manuscript, 2026'))}</p><div class="pub-links">{links}</div>{summary}</div></article>''')
+    return ''.join(out)
 
-def tag_list(tags: Iterable[str]) -> str:
-    return "".join(f'<span class="tag">{e(tag)}</span>' for tag in tags)
+def home():
+    updates=''.join(f'<li><time>{e(x["date"])}</time><span>{e(x["text"])}</span></li>' for x in UPDATES)
+    greeting, introduction = SITE["intro"].split(" I am broadly", 1)
+    greeting_html = e(greeting).replace("Pocket", "<strong>Pocket</strong>")
+    introduction_html = e(introduction)
+    for term in ("VLA", "active perception", "flow matching", "RL"):
+        introduction_html = introduction_html.replace(term, f"<strong>{term}</strong>")
+    body=f'''<section class="about"><figure class="portrait-figure"><img class="portrait" src="{e(SITE['avatar'])}" alt="Portrait of {e(SITE['name'])}"><figcaption>Picture taken in May 2025</figcaption></figure><div class="about-copy"><h1>{e(SITE['name'])}</h1><p class="role">{e(SITE['role'])} · {e(SITE['affiliation'])}</p><p class="intro-greeting">{greeting_html}</p><p>I am broadly{introduction_html}</p><p>Outside of research, I enjoy <strong>running</strong> 🏃, <strong>hiking</strong> 🧗, exploring good <strong>food</strong> 🍜, and playing <strong>Golden Spatula</strong> 🪏.</p><p>You're always <strong>welcome</strong> to chat with me about research or anything else!</p><p>Email: <a href="mailto:{e(SITE['email'])}">{e(SITE['email'])}</a></p><div class="socials">{social_links()}</div></div></section>
+<section class="content-section"><h2>Updates</h2><ul class="updates">{updates}</ul></section>
+<section class="content-section"><div class="heading-row"><h2>Publications</h2><a href="research.html">View all →</a></div>{pub_cards(PUBLICATIONS,False)}</section>'''
+    return layout("About","About",body)
 
+def research():
+    intro="My research focuses on <strong>robot learning</strong>, with current interests in <strong>Vision-Language-Action models</strong>, <strong>active perception</strong>, <strong>flow matching</strong>, and <strong>reinforcement learning</strong>. I am particularly interested in developing <strong>reliable and generalizable robot policies</strong> that can learn from large-scale data and interact effectively with the physical world, including <strong>dexterous manipulation and grasping</strong>. Below is a complete list of my publications and ongoing manuscripts."
+    return layout("Research","Research",f'<section class="page-intro"><h1>Research</h1><p>{intro}</p></section><section class="content-section"><h2>Publications</h2>{pub_cards(PUBLICATIONS,True)}</section>')
 
-def link_list(links: dict[str, str]) -> str:
-    items = []
-    for label, url in links.items():
-        if url:
-            items.append(f'<a class="text-link" href="{e(href(url))}">{e(label.title())}</a>')
-    return "".join(items)
+def experience():
+    def rows(items):
+        out=[]
+        for x in items:
+            title=x.get("school") or x.get("organization")
+            title=f'<a href="{e(href(x.get("url")))}">{e(title)}</a>' if x.get("url") else e(title)
+            details = x.get("details_html") or e(x.get("details", ""))
+            details = f"<p>{details}</p>" if details else ""
+            out.append(f'<article class="timeline-row"><time>{e(x["period"])}</time><div><h3>{title}</h3><p class="role">{e(x.get("degree") or x.get("role"))}</p>{details}</div></article>')
+        return ''.join(out)
+    body=f'<section class="page-intro"><h1>Experience</h1></section><section class="content-section"><h2>Research Experience</h2>{rows(EXPERIENCE)}</section><section class="content-section"><h2>Education</h2>{rows(EDUCATION)}</section>'
+    return layout("Experience","Experience",body)
 
+def grid_cards(items):
+    cards=[]
+    for x in items:
+        tags='|'.join(x.get('tags',[]))
+        fit_class = " cover-contain" if x.get("cover_fit") == "contain" else ""
+        fit_class += " cover-zoom" if x.get("cover_zoom") else ""
+        cards.append(f'''<a class="portfolio-card{fit_class}" data-tags="{e(tags)}" href="{e(href(x.get('url','#')))}"><img src="{e(x.get('image','assets/img/project-notes.svg'))}" alt=""><span class="card-overlay"><strong>{e(x['title'])}</strong><small>{e(x.get('summary') or x.get('description',''))}</small></span></a>''')
+    return ''.join(cards)
 
-def nav(active: str, prefix: str = "") -> str:
-    links = [
-        ("index.html", "Home"),
-        ("notes.html", "Note"),
-        ("life.html", "Life"),
-    ]
-    return "".join(
-        f'<a class="{"active" if label == active else ""}" href="{prefix}{href}">{label}</a>'
-        for href, label in links
-    )
-
-
-def layout(title: str, active: str, body: str, prefix: str = "") -> str:
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <meta name="description" content="{e(SITE["name"])} personal academic homepage">
-  <title>{e(title)} | {e(SITE["name"])}</title>
-  <link rel="stylesheet" href="{prefix}assets/style.css?v=4">
-  <script>
-    (() => {{
-      const savedTheme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.dataset.theme = savedTheme || (prefersDark ? 'dark' : 'light');
-    }})();
-  </script>
-</head>
-<body>
-  <header class="topbar">
-    <a class="brand" href="{prefix}index.html">{e(SITE["name"])}</a>
-    <div class="topbar-actions">
-      <nav>{nav(active, prefix)}</nav>
-      <button class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
-        <span class="theme-toggle-icon" aria-hidden="true"></span>
-        <span class="theme-toggle-text">Dark</span>
-      </button>
-    </div>
-  </header>
-  <main>
-    {body}
-  </main>
-  <footer>
-    <span>Built with Python for GitHub Pages.</span>
-    <span>Last updated: 2026</span>
-  </footer>
-  <script>
-    (() => {{
-      const toggle = document.querySelector('.theme-toggle');
-      const label = document.querySelector('.theme-toggle-text');
-      const root = document.documentElement;
-
-      const applyTheme = (theme) => {{
-        root.dataset.theme = theme;
-        localStorage.setItem('theme', theme);
-        const isDark = theme === 'dark';
-        if (toggle) toggle.setAttribute('aria-pressed', String(isDark));
-        if (label) label.textContent = isDark ? 'Light' : 'Dark';
-      }};
-
-      applyTheme(root.dataset.theme || 'light');
-      if (toggle) {{
-        toggle.addEventListener('click', () => {{
-          applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
-        }});
+def filters(items, extra_tags=None):
+    tags=sorted({t for x in items for t in x.get('tags',[])} | set(extra_tags or []),key=str.lower)
+    buttons='<button class="active" data-filter="all">All</button>'+''.join(f'<button data-filter="{e(t)}">{e(t)}</button>' for t in tags)
+    return f'''<div class="filters">{buttons}</div><script>
+window.addEventListener("DOMContentLoaded", () => {{
+  const buttons = [...document.querySelectorAll(".filters button")];
+  const cards = [...document.querySelectorAll(".portfolio-card")];
+  const grid = document.querySelector(".portfolio-grid");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!grid || !cards.length) return;
+  grid.classList.add("isotope-grid", "isotope-no-transition");
+  let currentFilter = "all";
+  const layout = () => {{
+    const gap = 18;
+    const columns = window.innerWidth <= 480 ? 1 : window.innerWidth <= 760 ? 2 : 3;
+    const width = (grid.clientWidth - gap * (columns - 1)) / columns;
+    const height = width * .75;
+    let visibleIndex = 0;
+    cards.forEach(card => {{
+      const visible = currentFilter === "all" || card.dataset.tags.split("|").includes(currentFilter);
+      card.style.width = width + "px";
+      card.style.height = height + "px";
+      if (visible) {{
+        const column = visibleIndex % columns;
+        const row = Math.floor(visibleIndex / columns);
+        const x = column * (width + gap);
+        const y = row * (height + gap);
+        card.dataset.x = x;
+        card.dataset.y = y;
+        card.classList.remove("isotope-hidden");
+        card.style.transform = "translate3d(" + x + "px," + y + "px,0) scale(1)";
+        visibleIndex += 1;
+      }} else {{
+        const x = Number(card.dataset.x || 0);
+        const y = Number(card.dataset.y || 0);
+        card.classList.add("isotope-hidden");
+        card.style.transform = "translate3d(" + x + "px," + y + "px,0) scale(.001)";
       }}
-    }})();
-  </script>
-</body>
-</html>
-"""
-
-
-def hero() -> str:
-    interests = "".join(f"<li>{e(item)}</li>" for item in SITE["interests"])
-
-    education_items = []
-    for item in EDUCATION:
-        education_items.append(
-            f"""
-            <article class="hero-detail-item">
-              <h2>{e(item["school"])}</h2>
-              <p>{e(item["degree"])}</p>
-              <span>{e(item["period"])}</span>
-            </article>
-            """.strip()
-        )
-
-    experience_items = []
-    for item in EXPERIENCE:
-        organization = e(item["organization"])
-        organization_url = item.get("url")
-        if organization_url and organization_url != "#":
-            organization = f'<a class="text-link" href="{e(href(organization_url))}">{organization}</a>'
-        experience_items.append(
-            f"""
-            <article class="hero-detail-item">
-              <h2>{organization}</h2>
-              <p>{e(item["role"])}</p>
-              <span>{e(item["period"])}</span>
-            </article>
-            """.strip()
-        )
-
-    education_html = "\n".join(education_items)
-    experience_html = "\n".join(experience_items)
-
-    return f"""
-<section class="hero">
-  <aside class="profile-panel">
-    <img src="{e(SITE["avatar"])}" alt="{e(SITE["name"])} portrait">
-    <div>
-      <strong>{e(SITE["location"])}</strong>
-      <ul>{interests}</ul>
-    </div>
-  </aside>
-  <div class="hero-copy">
-    <p class="eyebrow">{e(SITE["role"])} · {e(SITE["affiliation"])}</p>
-    <h1>{e(SITE["name"])}</h1>
-    <p class="intro">{e(SITE["intro"])}</p>
-    <p class="contact-line">Email: <a href="mailto:{e(SITE["email"])}">{e(SITE["email"])}</a></p>
-    <div class="actions">
-      <a class="button primary" href="mailto:{e(SITE["email"])}">Email</a>
-      <a class="button primary" href="{e(SITE["github"])}">GitHub</a>
-      <a class="button" href="{e(SITE["scholar"])}">Google Scholar</a>
-    </div>
-    <div class="hero-details">
-      <section>
-        <p class="mini-label">Education</p>
-        <div class="hero-details-list">{education_html}</div>
-      </section>
-      <section>
-        <p class="mini-label">Internship</p>
-        <div class="hero-details-list">{experience_html}</div>
-      </section>
-    </div>
-  </div>
-</section>
-"""
-
-
-def media_items(items: list[dict[str, object]]) -> str:
-    rendered = []
-    for item in items:
-        title = e(item["title"])
-        item_url = item.get("url")
-        if item_url:
-            title = f'<a href="{e(href(item_url))}">{title}</a>'
-        rendered.append(
-            f"""
-<article class="media-item">
-  <img src="{e(item["image"])}" alt="">
-  <div>
-    <div class="item-meta">{e(item.get("period") or item.get("venue") or "")}</div>
-    <h3>{title}</h3>
-    <p>{e(item["description"])}</p>
-    <div class="item-row">{tag_list(item.get("tags", []))}</div>
-    <div class="item-row">{link_list(item.get("links", {}))}</div>
-  </div>
-</article>
-"""
-        )
-    return "".join(rendered)
-
-
-def timeline(items: list[dict[str, str]], title_key: str, subtitle_key: str) -> str:
-    rendered = []
-    for item in items:
-        rendered.append(
-            f"""
-<article class="timeline-item">
-  <div class="date">{e(item["period"] if "period" in item else item["date"])}</div>
-  <div>
-    <h3>{e(item[title_key])}</h3>
-    <p class="subtitle">{e(item[subtitle_key])}</p>
-    <p>{e(item["details"] if "details" in item else item["description"])}</p>
-  </div>
-</article>
-"""
-        )
-    return "".join(rendered)
-
-
-def reward_items(items: list[dict[str, str]]) -> str:
-    rendered = []
-    for item in items:
-        rendered.append(
-            f"""
-<article class="timeline-item">
-  <div class="date">{e(item["date"])}</div>
-  <div>
-    <h3>{e(item["title"])}</h3>
-    <p>{e(item["description"])}</p>
-  </div>
-</article>
-"""
-        )
-    return "".join(rendered)
-
-
-def index_page() -> str:
-    body = f"""
-{hero()}
-<section class="section">
-  <div class="section-heading">
-    <p class="eyebrow">Publications</p>
-  </div>
-  <div class="stack">{media_items(PUBLICATIONS)}</div>
-</section>
-<section class="section">
-  <div class="section-heading">
-    <p class="eyebrow">Projects</p>
-  </div>
-  <div class="stack">{media_items(PROJECTS)}</div>
-</section>
-<section class="section">
-  <div class="section-heading">
-    <p class="eyebrow">Rewards</p>
-  </div>
-  <div class="timeline">{reward_items(REWARDS)}</div>
-</section>
-"""
-    return layout("Home", "Home", body)
-
-
-def reliable_grasp_page() -> str:
-    project = next(
-        item for item in PROJECTS if item.get("url") == "reliable_grasp/"
-    )
-    demo_cards = [
-        ("demo_01.mp4", "demo_01.jpg", "Top-view yellow target"),
-        ("demo_02.mp4", "demo_02.jpg", "Top-view blue target"),
-        ("demo_03.mp4", "demo_03.jpg", "Top-view white target"),
-        ("demo_04.mp4", "demo_04.jpg", "Top-view black target"),
-        ("demo_05.mp4", "demo_05.jpg", "FR3 grasping scene A"),
-        ("demo_06.mp4", "demo_06.jpg", "FR3 grasping scene B"),
-        ("demo_07.mp4", "demo_07.jpg", "Full workspace scene"),
-    ]
-    demos = []
-    for index, (video_name, poster_name, label) in enumerate(demo_cards, start=1):
-        demos.append(
-            f"""
-<article class="demo-card">
-  <video class="autoplay-demo" autoplay loop muted playsinline preload="auto" poster="../assets/content/projects/reliable_grasp/{poster_name}?v=2" aria-label="{e(label)}">
-    <source src="../assets/content/projects/reliable_grasp/{video_name}?v=2" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</article>
-"""
-        )
-    body = f"""
-<style>
-  main {{
-    width: min(1120px, calc(100% - 48px));
-  }}
-  .reliable-hero {{
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 34px;
-    align-items: end;
-    padding: 72px 0 42px;
-  }}
-  .demo-showcase,
-  .result-section,
-  .architecture-section {{
-    padding: 46px 0;
-    border-top: 1px solid var(--line);
-  }}
-  .showcase-banner {{
-    display: flex;
-    align-items: center;
-    gap: 26px;
-    min-height: 92px;
-    margin-bottom: 24px;
-    padding: 16px 34px;
-    color: #ffffff;
-    background: #cc111f;
-  }}
-  .demo-grid {{
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 26px;
-  }}
-  .demo-card {{
-    position: relative;
-    min-height: 188px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    background: #000000;
-  }}
-  .demo-card:nth-child(-n+4) {{
-    grid-column: span 3;
-  }}
-  .demo-card:nth-child(n+5) {{
-    grid-column: span 4;
-    min-height: 236px;
-  }}
-  .demo-card video {{
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: inherit;
-    object-fit: cover;
-    background: #000000;
-  }}
-  .result-grid {{
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-    gap: 22px;
-  }}
-  @media (max-width: 820px) {{
-    .reliable-hero,
-    .result-grid {{
-      grid-template-columns: 1fr;
-    }}
-    .demo-card:nth-child(n) {{
-      grid-column: span 12;
-    }}
-  }}
-</style>
-<section class="reliable-hero">
-  <div>
-    <p class="eyebrow">Project Demo</p>
-    <h1>{e(project["title"])}</h1>
-    <p>{e(project["description"])}</p>
-    <div class="item-row">{tag_list(project.get("tags", []))}</div>
-  </div>
-  <div class="project-facts" aria-label="Project facts">
-    <span>{e(project["period"])}</span>
-    <span>YOLO11-Seg + pi_0.5 VLA</span>
-    <span>Physical FR3 Robot</span>
-  </div>
-</section>
-<section class="demo-showcase">
-  <div class="showcase-banner">
-    <div class="seal">SJTU</div>
-    <h2>Demo Display</h2>
-    <div class="banner-mark" aria-hidden="true"><span></span><span></span></div>
-  </div>
-  <div class="demo-grid">{"".join(demos)}</div>
-</section>
-<section class="result-section">
-  <div class="section-heading compact">
-    <p class="eyebrow">Results</p>
-    <h2>Segmentation and Progress Comparison</h2>
-  </div>
-  <div class="result-grid">
-    <figure class="figure-placeholder large">
-      <img src="../assets/content/projects/reliable_grasp/chart_segmentation.png" alt="Segmentation result comparison chart" onerror="this.hidden=true">
-      <figcaption>
-        <strong>Figure 8. Segmentation Results</strong>
-      </figcaption>
-    </figure>
-    <figure class="figure-placeholder">
-      <img src="../assets/content/projects/reliable_grasp/chart_progress.png" alt="Progress comparison chart" onerror="this.hidden=true">
-      <figcaption>
-        <strong>Figure 9. Progress Comparison</strong>
-      </figcaption>
-    </figure>
-  </div>
-</section>
-<section class="architecture-section">
-  <div class="section-heading compact">
-    <p class="eyebrow">System</p>
-    <h2>Goal-Conditioned Grasping System Architecture</h2>
-  </div>
-  <figure class="figure-placeholder architecture-figure">
-    <img src="../assets/content/projects/reliable_grasp/system_architecture.png" alt="Goal-conditioned grasping system architecture" onerror="this.hidden=true">
-    <figcaption>
-      <strong>System Architecture</strong>
-    </figcaption>
-  </figure>
-</section>
-<script>
-  const playDemos = () => {{
-    document.querySelectorAll('.autoplay-demo').forEach((video) => {{
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.play().catch(() => {{}});
     }});
+    const rows = Math.ceil(visibleIndex / columns);
+    grid.style.height = (rows ? rows * height + (rows - 1) * gap : 0) + "px";
   }};
-  document.addEventListener('DOMContentLoaded', playDemos);
-  window.addEventListener('load', playDemos);
-</script>
-"""
-    return layout("Reliable Grasp", "Home", body, prefix="../")
+  layout();
+  requestAnimationFrame(() => requestAnimationFrame(() => grid.classList.remove("isotope-no-transition")));
+  buttons.forEach(button => button.addEventListener("click", event => {{
+    event.preventDefault();
+    currentFilter = button.dataset.filter;
+    buttons.forEach(item => item.classList.toggle("active", item === button));
+    layout();
+  }}));
+  let resizeTimer;
+  window.addEventListener("resize", () => {{
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(layout, 80);
+  }});
+  if (reducedMotion) grid.classList.add("isotope-no-transition");
+}});
+</script>'''
 
+def projects():
+    robot_items = [{**item, "tags": ["Robot"]} for item in PROJECTS]
+    course_items = [{**item, "tags": ["Course"]} for item in COURSES]
+    note_items = [{**item, "tags": ["Notes"]} for item in NOTES]
+    all_items=robot_items+course_items+note_items
+    return layout("Projects","Projects",f'<section class="page-intro"><h1>Projects</h1><p>Selected research projects, course projects, and study notes.</p></section>{filters(all_items)}<section class="portfolio-grid">{grid_cards(all_items)}</section>')
 
-def reliable_grasp_redirect_page() -> str:
-    return """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=reliable_grasp/">
-  <title>Reliable Grasp | Redirect</title>
-  <link rel="canonical" href="reliable_grasp/">
-</head>
-<body>
-  <p><a href="reliable_grasp/">Open Reliable Grasp demo page</a></p>
-</body>
-</html>
-"""
+def collection(title,desc,items,extra_tags=None):
+    return layout(title,title if title == "Lifes" else "",f'<section class="page-intro"><h1>{title}</h1><p>{desc}</p></section>{filters(items, extra_tags)}<section class="portfolio-grid">{grid_cards(items)}</section>')
 
+def reliable_grasp():
+    project = next(item for item in PROJECTS if item.get("url") == "reliable_grasp/")
+    labels = ["Top-view yellow target", "Top-view blue target", "Top-view white target", "Top-view black target", "FR3 grasping scene A", "FR3 grasping scene B", "Full workspace scene"]
+    demos = []
+    for index, label in enumerate(labels, 1):
+        demos.append(f'''<article class="demo-card"><video class="autoplay-demo" autoplay loop muted playsinline preload="metadata" poster="../assets/content/projects/reliable_grasp/demo_{index:02d}.jpg"><source src="../assets/content/projects/reliable_grasp/demo_{index:02d}.mp4" type="video/mp4">Your browser does not support the video tag.</video><span>{e(label)}</span></article>''')
+    tags = "".join(f"<span>{e(tag)}</span>" for tag in project.get("tags", []))
+    body = f'''<link rel="stylesheet" href="../assets/project-detail.css?v=1">
+<section class="project-hero"><p class="project-kicker"><a href="../projects.html">← Projects</a></p><h1>{e(project["title"])}</h1><p class="project-lead">{e(project["description"])}</p><div class="project-meta"><span>{e(project["period"])}</span><span aria-hidden="true">|</span><span>YOLO11 + pi_0.5</span><span aria-hidden="true">|</span><span>FR3 Robot</span></div><div class="project-tags">{tags}</div></section>
+<section class="project-section"><div class="project-heading"><p>Demonstrations</p><h2>Reliable grasping across objects and viewpoints</h2></div><div class="demo-grid">{"".join(demos)}</div></section>
+<section class="project-section"><div class="project-heading"><p>Results</p><h2>Segmentation and progress comparison</h2></div><div class="result-grid"><figure><img src="../assets/content/projects/reliable_grasp/chart_segmentation.png" alt="Segmentation result comparison chart"><figcaption>Figure 8. Segmentation Results</figcaption></figure><figure><img src="../assets/content/projects/reliable_grasp/chart_progress.png" alt="Progress comparison chart"><figcaption>Figure 9. Progress Comparison</figcaption></figure></div></section>
+<section class="project-section"><div class="project-heading"><p>System</p><h2>Goal-conditioned grasping architecture</h2></div><figure class="architecture-figure"><img src="../assets/content/projects/reliable_grasp/system_architecture.png" alt="Goal-conditioned grasping system architecture"><figcaption>System Architecture</figcaption></figure></section>
+<script>document.querySelectorAll(".autoplay-demo").forEach(video=>{{video.muted=true;video.play().catch(()=>{{}})}});</script>'''
+    return layout("Reliable Grasp", "Projects", body, "../")
 
-def filter_script() -> str:
-    return """
-<script>
-  const filterToggle = document.querySelector('.filter-toggle');
-  const filterPanel = document.querySelector('.filter-panel');
-  const currentFilter = document.querySelector('.current-filter');
-  const buttons = document.querySelectorAll('.filter-button');
-  const cards = document.querySelectorAll('[data-tags]');
-  if (filterToggle && filterPanel) {
-    filterToggle.addEventListener('click', () => {
-      const isOpen = !filterPanel.hidden;
-      filterPanel.hidden = isOpen;
-      filterToggle.setAttribute('aria-expanded', String(!isOpen));
-    });
-  }
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      buttons.forEach((item) => item.classList.remove('active'));
-      button.classList.add('active');
-      const filter = button.dataset.filter;
-      if (currentFilter) {
-        currentFilter.textContent = filter === 'all' ? 'All' : button.textContent;
-      }
-      cards.forEach((card) => {
-        const cardTags = card.dataset.tags ? card.dataset.tags.split('|') : [];
-        const visible = filter === 'all' || cardTags.includes(filter);
-        card.hidden = !visible;
-      });
-      if (filterPanel && filter !== 'all') {
-        filterPanel.hidden = true;
-        filterToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  });
-  document.addEventListener('click', (event) => {
-    if (!filterPanel || !filterToggle || filterPanel.hidden) return;
-    if (!filterPanel.contains(event.target) && !filterToggle.contains(event.target)) {
-      filterPanel.hidden = true;
-      filterToggle.setAttribute('aria-expanded', 'false');
-    }
-  });
-</script>
-"""
+def build():
+    life_items = sorted(
+        enumerate(LIFE_RECORDS),
+        key=lambda pair: (pair[1].get("date", ""), -pair[0]),
+        reverse=True,
+    )
+    life_items = [item for _, item in life_items]
+    outputs={"index.html":home(),"research.html":research(),"experience.html":experience(),"projects.html":projects(),"notes.html":collection("Notes","Technical notes, reading summaries, and course records.",NOTES+COURSES),"life.html":collection("Lifes","A visual archive of moments beyond research.",life_items,["Photo","Social","Hobby","Travel"]),"reliable_grasp/index.html":reliable_grasp()}
+    for path,text in outputs.items(): (ROOT/path).write_text(text,encoding="utf-8")
+    print("Built:",", ".join(outputs))
 
-
-def tag_filter(tags: list[str]) -> str:
-    grouped: dict[str, list[str]] = {}
-    for tag in tags:
-        initial = tag[0].upper() if tag and tag[0].isalnum() else "#"
-        grouped.setdefault(initial, []).append(tag)
-
-    groups = []
-    for initial in sorted(grouped):
-        tag_buttons = "".join(
-            f'<button class="filter-button" data-filter="{e(tag)}">{e(tag)}</button>'
-            for tag in grouped[initial]
-        )
-        groups.append(
-            f"""
-<div class="filter-group">
-  <div class="filter-letter">{e(initial)}</div>
-  <div class="filter-options">{tag_buttons}</div>
-</div>
-"""
-        )
-
-    return f"""
-<section class="filters" aria-label="Tag filters">
-  <div class="filter-summary">
-    <button class="filter-toggle" type="button" aria-expanded="false" aria-controls="tag-filter-panel">
-      Filter Tags
-    </button>
-    <span>Current: <strong class="current-filter">All</strong></span>
-    <button class="filter-button reset-filter active" data-filter="all" type="button">All</button>
-  </div>
-  <div class="filter-panel" id="tag-filter-panel" hidden>
-    {"".join(groups)}
-  </div>
-</section>
-"""
-
-
-def media_collection_page(
-    title: str,
-    active: str,
-    intro: str,
-    items: list[dict[str, object]],
-    kind: str,
-    heading: str | None = None,
-) -> str:
-    tags = sorted({tag for item in items for tag in item.get("tags", [])})
-    cards = []
-    for item in items:
-        tags_attr = "|".join(item.get("tags", []))
-        meta = item.get("date") or item.get("term") or ""
-        prefix = f'{e(item.get("code", ""))} · ' if item.get("code") else ""
-        cards.append(
-            f"""
-<article class="media-item note-item" data-tags="{e(tags_attr)}">
-  <img src="{e(item.get("image", "assets/img/project-notes.svg"))}" alt="">
-  <div>
-    <div class="item-meta">{prefix}{e(meta)}</div>
-    <h3><a href="{e(item.get("url", "#"))}">{e(item.get("title", ""))}</a></h3>
-    <p>{e(item.get("summary", ""))}</p>
-    <div class="item-row">{tag_list(item.get("tags", []))}</div>
-  </div>
-</article>
-"""
-        )
-    section_title = f'<div class="section-heading"><p class="eyebrow">{e(kind)}</p><h2>{e(heading)}</h2></div>' if heading else ""
-    body = f"""
-<section class="page-hero">
-  <p class="eyebrow">{e(kind)}</p>
-  <h1>{e(title)}</h1>
-  <p>{e(intro)}</p>
-</section>
-{tag_filter(tags)}
-<section class="section collection-list">{section_title}<div class="stack">{"".join(cards)}</div></section>
-{filter_script()}
-"""
-    return layout(title, active, body)
-
-
-def main() -> None:
-    pages = {
-        "index.html": index_page(),
-        "notes.html": media_collection_page(
-            "Note",
-            "Note",
-            "Technical notes, reading summaries, course records, and implementation references.",
-            NOTES + COURSES,
-            "Notes",
-        ),
-        "life.html": media_collection_page(
-            "Life",
-            "Life",
-            "Personal records and non-academic updates organized with lightweight tags.",
-            LIFE_RECORDS,
-            "Life",
-        ),
-        "reliable_grasp/index.html": reliable_grasp_page(),
-        "reliable_grasp.html": reliable_grasp_redirect_page(),
-    }
-    for filename, content in pages.items():
-        path = ROOT / filename
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8")
-
-
-if __name__ == "__main__":
-    main()
+if __name__=="__main__": build()
