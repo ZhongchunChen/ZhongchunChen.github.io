@@ -27,14 +27,14 @@ SITE = {
 
 UPDATES = [
     {
-        "date": "2026.07-2026.09",
+        "date": "July-Sept 2026:",
         "text": (
             "Completed summer research internships at RoboScience and NUS "
             "LinSLab in Shenzhen."
         ),
     },
     {
-        "date": "2025.06",
+        "date": "June 2025:",
         "text": (
             "Joined the SJTU HIROL Lab as a research intern in robot learning."
         ),
