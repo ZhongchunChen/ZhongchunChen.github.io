@@ -43,7 +43,12 @@ def pub_cards(items, summaries=True):
     return ''.join(out)
 
 def home():
-    updates=''.join(f'<li><time>{e(x["date"])}</time><span>{e(x["text"])}</span></li>' for x in UPDATES)
+    def update_text(item):
+        rendered = e(item["text"])
+        for label, url in item.get("links", {}).items():
+            rendered = rendered.replace(e(label), f'<a href="{e(url)}">{e(label)}</a>')
+        return rendered
+    updates=''.join(f'<li><time>{e(x["date"])}</time><span>{update_text(x)}</span></li>' for x in UPDATES)
     greeting, introduction = SITE["intro"].split(" I am broadly", 1)
     greeting_html = e(greeting).replace("Pocket", "<strong>Pocket</strong>")
     introduction_html = e(introduction)

@@ -29,15 +29,20 @@ UPDATES = [
     {
         "date": "July-Sept 2026:",
         "text": (
-            "Completed summer research internships at RoboScience and NUS "
+            "Completed summer research internships at RoboScience and "
             "LinSLab in Shenzhen."
         ),
+        "links": {
+            "RoboScience": "https://en.roboscience.co/",
+            "LinSLab": "https://linsats.github.io/",
+        },
     },
     {
         "date": "June 2025:",
         "text": (
             "Joined the SJTU HIROL Lab as a research intern in robot learning."
         ),
+        "links": {"HIROL Lab": "https://hirol.sjtu.edu.cn"},
     },
 ]
 
