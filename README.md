@@ -14,6 +14,76 @@ Open `http://localhost:8000` to preview the site.
 
 Important rule: `build_site.py` only reads `site_data.py` for visible Note/Life entries. Files placed under `assets/`, `notes/`, or `life/` will not be shown automatically. You must add the corresponding item in `site_data.py`.
 
+## 使用项目 Skills
+
+仓库在 .agents/skills/ 中提供了项目级 Skills。使用 Codex 修改网站时，可以直接在请求中写出 Skill 名称，例如：
+
+    使用 $homepage-add-life 增加一条 Travel 内容。
+    使用 $homepage-add-publication 添加一篇论文。
+    使用 $homepage-edit-about 修改 About 页的研究介绍。
+
+目前可用的 Skills：
+
+- **$homepage-edit-about**：修改 About 文案、身份、单位、邮箱、社交链接、兴趣或照片说明。
+- **$homepage-replace-about-photo**：替换 About 照片并设置题注、完整显示或裁切方式。
+- **$homepage-add-update**：新增或修改首页 Updates。
+- **$homepage-add-publication**：新增或修改首页及 Research 页的 Publication。
+- **$homepage-add-project**：新增 Robot、Course 或 Notes 项目卡片。
+- **$homepage-add-life**：新增 Photo、Social、Hobby 或 Travel 生活卡片。
+
+### 一般需要提供的信息
+
+调用 Skill 时尽量一次提供完整信息。信息不足会影响页面内容或视觉效果时，Skill 会先询问，不会自行编造日期、机构、作者、研究结果、人物关系、链接或封面。
+
+#### 修改 About 文案
+
+- 需要修改的具体段落或字段。
+- 新文案，或足以起草文案的真实信息。
+- 修改邮箱、单位、角色或社交链接时，提供准确的新值。
+- 修改照片说明时，提供准确的时间、地点或完整题注。
+
+#### 替换 About 照片
+
+- 附件图片或仓库中的图片路径。
+- 展示方式：完整显示、覆盖裁切，或需要保留的视觉中心。
+- 如果要修改题注，提供准确的题注内容。
+
+#### 新增 Update
+
+- 日期，格式通常为 YYYY.MM。
+- 事件内容，例如入职、论文接收、获奖或项目完成。
+
+#### 新增 Publication
+
+- 论文标题。
+- 按展示顺序排列的作者。
+- Venue、论文状态与年份。
+- 简短且准确的论文摘要。
+- 封面图或 teaser 图片。
+- Paper、Project、Code 等链接；如果没有链接，需要明确说明。
+
+#### 新增 Project
+
+- 分类：Robot、Course 或 Notes。
+- 标题、日期或项目周期。
+- 简短项目介绍。
+- 封面图片。
+- 点击后的跳转链接，或明确说明暂不跳转。
+- 图片展示方式：铺满裁切或完整显示。
+- 如果需要独立详情页，还需提供详情内容、图片、视频等素材。
+
+#### 新增 Life
+
+- 英文标题；需要双语标题时同时提供中文标题。
+- 日期，格式通常为 YYYY.MM。
+- 经历事实或希望表达的内容，Skill 会在不增加事实的前提下整理成英文。
+- 一个或多个标签：Photo、Social、Hobby、Travel。
+- 封面图片。
+- 点击后的链接，或明确说明暂不跳转。
+- 图片展示方式：铺满裁切或完整显示。
+
+每个 Skill 完成修改后都会重新运行 build_site.py，检查 Python 语法和生成页面。
+
 ## 中文说明
 
 ### 内容配置入口
