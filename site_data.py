@@ -142,6 +142,14 @@ NOTES = [
 
 COURSES = [
     {
+        "title": "CampusDB: Full-Stack Database Implementation",
+        "date": "2026.11",
+        "summary": "NIS3351-02 Principles of Databases course project.",
+        "image": "assets/img/NIS3351.png",
+        "tags": ["SJTU", "course project"],
+        "url": "https://github.com/MingchenDai/NIS3351-02",
+    },
+    {
         "title": "Schedule Manager",
         "date": "2025-07-22",
         "summary": "NIS1336 Programming Practice: Courese Project",
