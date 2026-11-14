@@ -25,11 +25,7 @@ SITE = {
     ],
 }
 
-UPDATES = [
-    {"date": "2026.09", "text": "I will join NUS LinSLab / RoboScience as a summer research intern."},
-    {"date": "2025.12", "text": "Completed a goal-conditioned VLA project for reliable robotic grasping."},
-    {"date": "2025.09", "text": "Joined SJTU HIROL-Lab as a research intern."},
-]
+UPDATES = []
 
 PUBLICATIONS = [
     # {
