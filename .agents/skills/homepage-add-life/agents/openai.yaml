@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Homepage Life"
+  short_description: "Add a dated Photo, Social, Hobby, or Travel card"
+  default_prompt: "Use $homepage-add-life to add a new Lifes-page card."

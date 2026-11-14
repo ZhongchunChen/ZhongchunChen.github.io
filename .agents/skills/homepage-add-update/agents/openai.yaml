@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Homepage Update"
+  short_description: "Add dated news to the homepage Updates list"
+  default_prompt: "Use $homepage-add-update to add a new dated homepage update."

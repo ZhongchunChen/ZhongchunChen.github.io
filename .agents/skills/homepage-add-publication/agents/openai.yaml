@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Homepage Publication"
+  short_description: "Add a paper with cover, summary, and links"
+  default_prompt: "Use $homepage-add-publication to add a publication to my website."

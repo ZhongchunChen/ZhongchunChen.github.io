@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replace About Photo"
+  short_description: "Replace and configure the About portrait"
+  default_prompt: "Use $homepage-replace-about-photo to replace my About photo."

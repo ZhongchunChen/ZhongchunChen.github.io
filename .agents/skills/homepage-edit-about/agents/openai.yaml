@@ -1,0 +1,4 @@
+interface:
+  display_name: "Edit Homepage About"
+  short_description: "Edit profile text, links, and About metadata"
+  default_prompt: "Use $homepage-edit-about to update my About-page content."
