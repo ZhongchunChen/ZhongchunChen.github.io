@@ -65,10 +65,9 @@ PROJECTS = [
         "title": "YOLO-SAM-GraspNet: Robotic Grasping",
         "period": "2025.07",
         "description": (
-            "An end-to-end robotic grasping pipeline integrating open-vocabulary "
-            "object detection, image segmentation, 6-DoF grasp prediction, and "
-            "simulated UR5 execution. The system performs object pick-and-place "
-            "in a MuJoCo environment."
+            "Built a MuJoCo pipeline connecting open-vocabulary detection, "
+            "segmentation, 6-DoF grasp prediction, and simulated UR5 "
+            "pick-and-place."
         ),
         "image": "assets/img/yolo_sam_graspnet.jpg",
         "url": "https://github.com/ZhongchunChen/Yolo_World-Sam-Graspnet-grasp-manipulator",
@@ -78,11 +77,8 @@ PROJECTS = [
         "title": "Goal-Conditioned VLA Based on pi_0.5",
         "period": "2025.10",
         "description": (
-            "Developed a goal-conditioned robotic grasping system combining "
-            "YOLO11-Seg with the pi_0.5 VLA model. Resolved the VLA model's "
-            "high sensitivity to text prompts by introducing an explicit visual "
-            "anchoring mechanism, significantly boosting grasping reliability "
-            "on a physical FR3 robot."
+            "Built a YOLO11-Seg and pi_0.5 system with visual anchoring for "
+            "reliable object grasping on an FR3 robot."
         ),
         "image": "assets/img/reliable_grasp.png",
         "url": "reliable_grasp/",
@@ -298,7 +294,7 @@ LIFE_RECORDS = [
             "journey exploring robotics. [2024.10]"
         ),
         "image": "assets/img/robot_game.jpg",
-        "tags": ["Hobby", "Robot"],
+        "tags": ["Hobby"],
         "url": "#",
     },
     {
