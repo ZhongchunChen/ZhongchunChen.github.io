@@ -117,7 +117,7 @@ EXPERIENCE = [
     {
         "organization": "NUS LinSLab",
         "url": "https://linsats.github.io/",
-        "role": "Summer Research Intern",
+        "role": "Research Intern",
         "period": "2026.07 - 2026.09",
         "details_html": (
             "Worked on training a general <strong>trajectory-conditioned</strong> dexterous "
@@ -127,7 +127,7 @@ EXPERIENCE = [
     {
         "organization": "RoboScience",
         "url": "https://en.roboscience.co/",
-        "role": "Summer Research Intern",
+        "role": "Research Intern",
         "period": "2026.07 - 2026.09",
         "details_html": (
             "<strong>Led</strong> the development of a "
