@@ -55,8 +55,8 @@ def home():
     for term in ("VLA", "active perception", "flow matching", "RL"):
         introduction_html = introduction_html.replace(term, f"<strong>{term}</strong>")
     introduction_html = introduction_html.replace(
-        "SJTU HIROL-Lab",
-        '<a href="https://hirol.sjtu.edu.cn">SJTU HIROL-Lab</a>',
+        "HIROL-Lab",
+        '<a href="https://hirol.sjtu.edu.cn">HIROL-Lab</a>',
     ).replace(
         "Prof. Wenzhao Lian",
         '<a href="https://lianwenzhao.github.io/">Prof. Wenzhao Lian</a>',

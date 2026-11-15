@@ -15,7 +15,7 @@ SITE = {
         "Vision-Language-Action (VLA) models, active perception, flow "
         "matching, and reinforcement learning (RL). I am currently an "
         "undergraduate student at Shanghai Jiao Tong University and a Research "
-        "Intern at SJTU HIROL-Lab, advised by Prof. Wenzhao Lian."
+        "Intern at HIROL-Lab, advised by Prof. Wenzhao Lian."
     ),
     "interests": [
         "Robot Learning",
