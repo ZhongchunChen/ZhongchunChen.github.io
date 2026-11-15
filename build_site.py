@@ -54,7 +54,14 @@ def home():
     introduction_html = e(introduction)
     for term in ("VLA", "active perception", "flow matching", "RL"):
         introduction_html = introduction_html.replace(term, f"<strong>{term}</strong>")
-    body=f'''<section class="about"><figure class="portrait-figure"><img class="portrait" src="{e(SITE['avatar'])}" alt="Portrait of {e(SITE['name'])}"><figcaption>Picture taken in May 2025</figcaption></figure><div class="about-copy"><h1>{e(SITE['name'])}</h1><p class="role">{e(SITE['role'])} · {e(SITE['affiliation'])}</p><p class="intro-greeting">{greeting_html}</p><p>I am broadly{introduction_html}</p><p>Outside of research, I enjoy <strong>running</strong> 🏃, <strong>hiking</strong> 🧗, exploring good <strong>food</strong> 🍜, and playing <strong>Golden Spatula</strong> 🪏.</p><p>You're always <strong>welcome</strong> to chat with me about research or anything else!</p><p>Email: <a href="mailto:{e(SITE['email'])}">{e(SITE['email'])}</a></p><div class="socials">{social_links()}</div></div></section>
+    introduction_html = introduction_html.replace(
+        "SJTU HIROL-Lab",
+        '<a href="https://hirol.sjtu.edu.cn">SJTU HIROL-Lab</a>',
+    ).replace(
+        "Prof. Wenzhao Lian",
+        '<a href="https://lianwenzhao.github.io/">Prof. Wenzhao Lian</a>',
+    )
+    body=f'''<section class="about"><figure class="portrait-figure"><img class="portrait" src="{e(SITE['avatar'])}" alt="Portrait of {e(SITE['name'])}"><figcaption>Picture taken in May 2025</figcaption></figure><div class="about-copy"><h1>{e(SITE['name'])}</h1><p class="intro-greeting">{greeting_html}</p><p>I am broadly{introduction_html}</p><p>Outside of research, I enjoy <strong>running</strong> 🏃, <strong>hiking</strong> 🧗, exploring good <strong>food</strong> 🍜, and playing <strong>Golden Spatula</strong> 🪏.</p><p>You're always <strong>welcome</strong> to chat with me about research or anything else!</p><p>Email: <a href="mailto:{e(SITE['email'])}">{e(SITE['email'])}</a></p><div class="socials">{social_links()}</div></div></section>
 <section class="content-section"><h2>Updates</h2><ul class="updates">{updates}</ul></section>
 <section class="content-section"><div class="heading-row"><h2>Publications</h2><a href="research.html">View all →</a></div>{pub_cards(PUBLICATIONS,False)}</section>'''
     return layout("About","About",body)
@@ -80,9 +87,11 @@ def grid_cards(items):
     cards=[]
     for x in items:
         tags='|'.join(x.get('tags',[]))
+        date = x.get('period')
+        date_label = f'<small class="card-date">{e(date)}</small>' if date else ''
         fit_class = " cover-contain" if x.get("cover_fit") == "contain" else ""
         fit_class += " cover-zoom" if x.get("cover_zoom") else ""
-        cards.append(f'''<a class="portfolio-card{fit_class}" data-tags="{e(tags)}" href="{e(href(x.get('url','#')))}"><img src="{e(x.get('image','assets/img/project-notes.svg'))}" alt=""><span class="card-overlay"><strong>{e(x['title'])}</strong><small>{e(x.get('summary') or x.get('description',''))}</small></span></a>''')
+        cards.append(f'''<a class="portfolio-card{fit_class}" data-tags="{e(tags)}" href="{e(href(x.get('url','#')))}"><img src="{e(x.get('image','assets/img/project-notes.svg'))}" alt=""><span class="card-overlay"><strong>{e(x['title'])}</strong>{date_label}<small>{e(x.get('summary') or x.get('description',''))}</small></span></a>''')
     return ''.join(cards)
 
 def filters(items, extra_tags=None):

@@ -1,7 +1,5 @@
 SITE = {
     "name": "Zhongchun Chen",
-    "role": "Undergraduate Researcher",
-    "affiliation": "Shanghai Jiao Tong University",
     "location": "Shanghai, China",
     "email": "pocket-chen@sjtu.edu.cn",
     "github": "https://github.com/ZhongchunChen",
@@ -16,7 +14,8 @@ SITE = {
         "intelligence and robot learning, and specifically in "
         "Vision-Language-Action (VLA) models, active perception, flow "
         "matching, and reinforcement learning (RL). I am currently an "
-        "undergraduate student at Shanghai Jiao Tong University."
+        "undergraduate student at Shanghai Jiao Tong University and a Research "
+        "Intern at SJTU HIROL-Lab, advised by Prof. Wenzhao Lian."
     ),
     "interests": [
         "Robot Learning",
@@ -62,6 +61,19 @@ PUBLICATIONS = [
 ]
 
 PROJECTS = [
+    {
+        "title": "YOLO-SAM-GraspNet: Robotic Grasping (机器人抓取项目)",
+        "period": "2025.07",
+        "description": (
+            "An end-to-end robotic grasping pipeline integrating open-vocabulary "
+            "object detection, image segmentation, 6-DoF grasp prediction, and "
+            "simulated UR5 execution. The system performs object pick-and-place "
+            "in a MuJoCo environment."
+        ),
+        "image": "assets/img/yolo_sam_graspnet.jpg",
+        "url": "https://github.com/ZhongchunChen/Yolo_World-Sam-Graspnet-grasp-manipulator",
+        "tags": ["Robot"],
+    },
     {
         "title": "Goal-Conditioned VLA based on pi_0.5",
         "period": "2025.09 - 2025.12",
@@ -286,7 +298,7 @@ LIFE_RECORDS = [
             "journey exploring robotics. [2024.10]"
         ),
         "image": "assets/img/robot_game.jpg",
-        "tags": ["Hobby"],
+        "tags": ["Hobby", "Robot"],
         "url": "#",
     },
     {
