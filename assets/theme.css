@@ -32,6 +32,12 @@ nav a,
   color: var(--muted);
 }
 
+.experience-details {
+  border-left: 2px solid var(--line);
+  margin-left: 2px !important;
+  padding-left: 12px;
+}
+
 .portrait-figure {
   margin: 0;
 }

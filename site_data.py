@@ -105,7 +105,7 @@ EXPERIENCE = [
         "role": "Research Intern",
         "period": "2025 - Present",
         "details_html": (
-            "| Working on research in robot learning, including "
+            "Working on research in robot learning, including "
             "<strong>Vision-Language-Action models (VLAs)</strong>, "
             "<strong>active perception</strong>, and "
             "<strong>flow matching</strong>. Advised by "
@@ -120,7 +120,7 @@ EXPERIENCE = [
         "role": "Research Intern",
         "period": "2026.07 - 2026.09",
         "details_html": (
-            "| Worked on training a general <strong>trajectory-conditioned</strong> dexterous "
+            "Worked on training a general <strong>trajectory-conditioned</strong> dexterous "
             "policy using large-scale simulation data as a prior."
         ),
     },
@@ -130,7 +130,7 @@ EXPERIENCE = [
         "role": "Research Intern",
         "period": "2026.07 - 2026.09",
         "details_html": (
-            "| <strong>Led</strong> the development of a "
+            "<strong>Led</strong> the development of a "
             "<strong>simulation platform</strong> and "
             "<strong>data pipeline</strong> for generating motion-planning "
             "data at scale based on <strong>T(R,O)</strong> dexterous "

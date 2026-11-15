@@ -70,7 +70,7 @@ def experience():
             title=x.get("school") or x.get("organization")
             title=f'<a href="{e(href(x.get("url")))}">{e(title)}</a>' if x.get("url") else e(title)
             details = x.get("details_html") or e(x.get("details", ""))
-            details = f"<p>{details}</p>" if details else ""
+            details = f'<p class="experience-details">{details}</p>' if details else ""
             out.append(f'<article class="timeline-row"><time>{e(x["period"])}</time><div><div class="experience-heading"><h3>{title}</h3><span class="experience-role">{e(x.get("degree") or x.get("role"))}</span></div>{details}</div></article>')
         return ''.join(out)
     body=f'<section class="page-intro"><h1>Experience</h1></section><section class="content-section"><h2>Experience</h2>{rows(EXPERIENCE)}</section><section class="content-section"><h2>Education</h2>{rows(EDUCATION)}</section>'
