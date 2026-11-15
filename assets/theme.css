@@ -15,6 +15,25 @@ nav a,
   gap: 14px;
 }
 
+.experience-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experience-heading h3,
+.experience-role {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.experience-role {
+  color: var(--muted);
+}
+
 .portrait-figure {
   margin: 0;
 }
