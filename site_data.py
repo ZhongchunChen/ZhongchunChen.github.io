@@ -7,7 +7,7 @@ SITE = {
     "github": "https://github.com/ZhongchunChen",
     "scholar": "#",
     "cv": "#",
-    "linkedin": "#",
+    "linkedin": "https://www.linkedin.com/in/zhongchun-chen-602a693b6/",
     "x": "https://x.com/PocketChen_/",
     "avatar": "assets/img/ZhongchunChen.jpg",
     "intro": (
