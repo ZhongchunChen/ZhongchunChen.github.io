@@ -18,7 +18,7 @@ def layout(title, active, body, prefix=""):
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="{e(SITE['name'])} — academic homepage"><title>{e(title)} | {e(SITE['name'])}</title>
 <script>document.documentElement.dataset.theme=localStorage.getItem("theme")||"light";</script>
-<link rel="stylesheet" href="{prefix}assets/style.css?v=8"><link rel="stylesheet" href="{prefix}assets/theme.css?v=3"></head><body>
+<link rel="stylesheet" href="{prefix}assets/style.css?v=8"><link rel="stylesheet" href="{prefix}assets/theme.css?v=4"></head><body>
 <header class="site-header"><div class="header-inner"><a class="brand" href="{prefix}index.html">{e(SITE['name'])}</a><div class="nav-actions"><nav>{nav(active,prefix)}</nav><button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme"><span aria-hidden="true">☾</span></button></div></div></header>
 <main>{body}</main><footer>© 2026 {e(SITE['name'])}. Built for GitHub Pages.</footer>
 <script>
