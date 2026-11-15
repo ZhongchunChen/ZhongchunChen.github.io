@@ -62,7 +62,7 @@ PUBLICATIONS = [
 
 PROJECTS = [
     {
-        "title": "YOLO-SAM-GraspNet: Robotic Grasping (机器人抓取项目)",
+        "title": "YOLO-SAM-GraspNet: Robotic Grasping",
         "period": "2025.07",
         "description": (
             "An end-to-end robotic grasping pipeline integrating open-vocabulary "
@@ -75,8 +75,8 @@ PROJECTS = [
         "tags": ["Robot"],
     },
     {
-        "title": "Goal-Conditioned VLA based on pi_0.5",
-        "period": "2025.09 - 2025.12",
+        "title": "Goal-Conditioned VLA Based on pi_0.5",
+        "period": "2025.10",
         "description": (
             "Developed a goal-conditioned robotic grasping system combining "
             "YOLO11-Seg with the pi_0.5 VLA model. Resolved the VLA model's "
@@ -182,7 +182,7 @@ COURSES = [
     },
     {
         "title": "Schedule Manager",
-        "date": "2025-07-22",
+        "date": "2025.07",
         "summary": "NIS1336 Programming Practice: Courese Project",
         "image": "assets/img/SJTU_NIS1336_course_project.png",
         "cover_fit": "contain",

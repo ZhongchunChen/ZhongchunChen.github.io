@@ -1,5 +1,6 @@
 from html import escape
 from pathlib import Path
+import re
 from site_data import COURSES, EDUCATION, EXPERIENCE, LIFE_RECORDS, NOTES, PROJECTS, PUBLICATIONS, SITE, UPDATES
 
 ROOT = Path(__file__).parent
@@ -87,11 +88,15 @@ def grid_cards(items):
     cards=[]
     for x in items:
         tags='|'.join(x.get('tags',[]))
-        date = x.get('period')
-        date_label = f'<small class="card-date">{e(date)}</small>' if date else ''
+        raw_date = x.get('period') or x.get('date', '')
+        date_match = re.search(r'(20\d{2})[.-](\d{2})', str(raw_date))
+        date_suffix = f' [{date_match.group(1)}.{date_match.group(2)}]' if date_match else ''
+        summary = x.get('summary') or x.get('description', '')
+        if date_suffix and not re.search(r'\[20\d{2}\.\d{2}\]$', summary):
+            summary = summary.rstrip() + date_suffix
         fit_class = " cover-contain" if x.get("cover_fit") == "contain" else ""
         fit_class += " cover-zoom" if x.get("cover_zoom") else ""
-        cards.append(f'''<a class="portfolio-card{fit_class}" data-tags="{e(tags)}" href="{e(href(x.get('url','#')))}"><img src="{e(x.get('image','assets/img/project-notes.svg'))}" alt=""><span class="card-overlay"><strong>{e(x['title'])}</strong>{date_label}<small>{e(x.get('summary') or x.get('description',''))}</small></span></a>''')
+        cards.append(f'''<a class="portfolio-card{fit_class}" data-tags="{e(tags)}" href="{e(href(x.get('url','#')))}"><img src="{e(x.get('image','assets/img/project-notes.svg'))}" alt=""><span class="card-overlay"><strong>{e(x['title'])}</strong><small>{e(summary)}</small></span></a>''')
     return ''.join(cards)
 
 def filters(items, extra_tags=None):
@@ -158,6 +163,10 @@ def projects():
     course_items = [{**item, "tags": ["Course"]} for item in COURSES]
     note_items = [{**item, "tags": ["Notes"]} for item in NOTES]
     all_items=robot_items+course_items+note_items
+    def sort_date(item):
+        match = re.search(r'(20\d{2})[.-](\d{2})', str(item.get('period') or item.get('date', '')))
+        return (int(match.group(1)), int(match.group(2))) if match else (0, 0)
+    all_items.sort(key=sort_date, reverse=True)
     return layout("Projects","Projects",f'<section class="page-intro"><h1>Projects</h1><p>Selected research projects, course projects, and study notes.</p></section>{filters(all_items)}<section class="portfolio-grid">{grid_cards(all_items)}</section>')
 
 def collection(title,desc,items,extra_tags=None):
