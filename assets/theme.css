@@ -18,16 +18,18 @@ nav a,
 .experience-heading {
   display: flex;
   align-items: baseline;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
 }
 
 .experience-heading h3,
 .experience-role {
+  flex: 0 0 auto;
   margin: 0;
   font-size: 19px;
   font-weight: 600;
   line-height: 1.4;
+  white-space: nowrap;
 }
 
 .experience-role {
